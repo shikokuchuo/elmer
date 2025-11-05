@@ -126,16 +126,16 @@ modifying them:</p>
 <span><span class="co">#&gt; Paris</span></span>
 <span></span>
 <span><span class="va">chat</span></span>
-<span><span class="co">#&gt; &lt;Chat OpenAI/gpt-4.1-nano turns=5 tokens=53/3 $0.00&gt;</span></span>
-<span><span class="co">#&gt; ── <span style="color: #FFFFFF;">system</span> [0] ─────────────────────────────────────────────────────────</span></span>
+<span><span class="co">#&gt; &lt;Chat OpenAI/gpt-4.1-nano turns=5 input=53 output=3 cost=$0.00&gt;</span></span>
+<span><span class="co">#&gt; ── <span style="color: #FFFFFF;">system</span> ─────────────────────────────────────────────────────────────</span></span>
 <span><span class="co">#&gt; Be terse</span></span>
-<span><span class="co">#&gt; ── <span style="color: #0000BB;">user</span> [19] ──────────────────────────────────────────────────────────</span></span>
+<span><span class="co">#&gt; ── <span style="color: #0000BB;">user</span> ───────────────────────────────────────────────────────────────</span></span>
 <span><span class="co">#&gt; What's the capital of New Zealand</span></span>
-<span><span class="co">#&gt; ── <span style="color: #00BB00;">assistant</span> [2] ──────────────────────────────────────────────────────</span></span>
+<span><span class="co">#&gt; ── <span style="color: #00BB00;">assistant</span> [input=19 output=2 cost=$0.00] ───────────────────────────</span></span>
 <span><span class="co">#&gt; Wellington</span></span>
-<span><span class="co">#&gt; ── <span style="color: #0000BB;">user</span> [13] ──────────────────────────────────────────────────────────</span></span>
+<span><span class="co">#&gt; ── <span style="color: #0000BB;">user</span> ───────────────────────────────────────────────────────────────</span></span>
 <span><span class="co">#&gt; What's the capital of France</span></span>
-<span><span class="co">#&gt; ── <span style="color: #00BB00;">assistant</span> [1] ──────────────────────────────────────────────────────</span></span>
+<span><span class="co">#&gt; ── <span style="color: #00BB00;">assistant</span> [input=34 output=1 cost=$0.00] ───────────────────────────</span></span>
 <span><span class="co">#&gt; Paris</span></span></code></pre></div>
 <p>It would be annoying if chat objects were immutable, because then
 you’d need to save the result every time you chatted with the model. But
@@ -157,8 +157,8 @@ the existing chat:</p>
 <span><span class="co">#&gt; Paris</span></span>
 <span></span>
 <span><span class="va">chat</span></span>
-<span><span class="co">#&gt; &lt;Chat OpenAI/gpt-4.1-nano turns=1 tokens=0/0 $0.00&gt;</span></span>
-<span><span class="co">#&gt; ── <span style="color: #FFFFFF;">system</span> [0] ─────────────────────────────────────────────────────────</span></span>
+<span><span class="co">#&gt; &lt;Chat OpenAI/gpt-4.1-nano turns=1 input=0 output=0 cost=$0.00&gt;</span></span>
+<span><span class="co">#&gt; ── <span style="color: #FFFFFF;">system</span> ─────────────────────────────────────────────────────────────</span></span>
 <span><span class="co">#&gt; Be terse</span></span></code></pre></div>
 <p>You can also use <code>clone()</code> when you want to create a
 conversational “tree”, where conversations start from the same place,
@@ -172,31 +172,31 @@ but diverge over time:</p>
 <span><span class="va">chat1</span><span class="op">$</span><span class="fu">chat</span><span class="op">(</span><span class="st">"what's my name?"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Hadley.</span></span>
 <span><span class="va">chat1</span></span>
-<span><span class="co">#&gt; &lt;Chat OpenAI/gpt-4.1-nano turns=5 tokens=69/13 $0.00&gt;</span></span>
-<span><span class="co">#&gt; ── <span style="color: #FFFFFF;">system</span> [0] ─────────────────────────────────────────────────────────</span></span>
+<span><span class="co">#&gt; &lt;Chat OpenAI/gpt-4.1-nano turns=5 input=69 output=13 cost=$0.00&gt;</span></span>
+<span><span class="co">#&gt; ── <span style="color: #FFFFFF;">system</span> ─────────────────────────────────────────────────────────────</span></span>
 <span><span class="co">#&gt; Be terse</span></span>
-<span><span class="co">#&gt; ── <span style="color: #0000BB;">user</span> [23] ──────────────────────────────────────────────────────────</span></span>
+<span><span class="co">#&gt; ── <span style="color: #0000BB;">user</span> ───────────────────────────────────────────────────────────────</span></span>
 <span><span class="co">#&gt; My name is Hadley and I'm a data scientist</span></span>
-<span><span class="co">#&gt; ── <span style="color: #00BB00;">assistant</span> [10] ─────────────────────────────────────────────────────</span></span>
+<span><span class="co">#&gt; ── <span style="color: #00BB00;">assistant</span> [input=23 output=10 cost=$0.00] ──────────────────────────</span></span>
 <span><span class="co">#&gt; Hello, Hadley. Nice to meet you.</span></span>
-<span><span class="co">#&gt; ── <span style="color: #0000BB;">user</span> [13] ──────────────────────────────────────────────────────────</span></span>
+<span><span class="co">#&gt; ── <span style="color: #0000BB;">user</span> ───────────────────────────────────────────────────────────────</span></span>
 <span><span class="co">#&gt; what's my name?</span></span>
-<span><span class="co">#&gt; ── <span style="color: #00BB00;">assistant</span> [3] ──────────────────────────────────────────────────────</span></span>
+<span><span class="co">#&gt; ── <span style="color: #00BB00;">assistant</span> [input=46 output=3 cost=$0.00] ───────────────────────────</span></span>
 <span><span class="co">#&gt; Hadley.</span></span>
 <span></span>
 <span><span class="va">chat2</span><span class="op">$</span><span class="fu">chat</span><span class="op">(</span><span class="st">"what's my job?"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Data scientist.</span></span>
 <span><span class="va">chat2</span></span>
-<span><span class="co">#&gt; &lt;Chat OpenAI/gpt-4.1-nano turns=5 tokens=69/13 $0.00&gt;</span></span>
-<span><span class="co">#&gt; ── <span style="color: #FFFFFF;">system</span> [0] ─────────────────────────────────────────────────────────</span></span>
+<span><span class="co">#&gt; &lt;Chat OpenAI/gpt-4.1-nano turns=5 input=69 output=13 cost=$0.00&gt;</span></span>
+<span><span class="co">#&gt; ── <span style="color: #FFFFFF;">system</span> ─────────────────────────────────────────────────────────────</span></span>
 <span><span class="co">#&gt; Be terse</span></span>
-<span><span class="co">#&gt; ── <span style="color: #0000BB;">user</span> [23] ──────────────────────────────────────────────────────────</span></span>
+<span><span class="co">#&gt; ── <span style="color: #0000BB;">user</span> ───────────────────────────────────────────────────────────────</span></span>
 <span><span class="co">#&gt; My name is Hadley and I'm a data scientist</span></span>
-<span><span class="co">#&gt; ── <span style="color: #00BB00;">assistant</span> [10] ─────────────────────────────────────────────────────</span></span>
+<span><span class="co">#&gt; ── <span style="color: #00BB00;">assistant</span> [input=23 output=10 cost=$0.00] ──────────────────────────</span></span>
 <span><span class="co">#&gt; Hello, Hadley. Nice to meet you.</span></span>
-<span><span class="co">#&gt; ── <span style="color: #0000BB;">user</span> [13] ──────────────────────────────────────────────────────────</span></span>
+<span><span class="co">#&gt; ── <span style="color: #0000BB;">user</span> ───────────────────────────────────────────────────────────────</span></span>
 <span><span class="co">#&gt; what's my job?</span></span>
-<span><span class="co">#&gt; ── <span style="color: #00BB00;">assistant</span> [3] ──────────────────────────────────────────────────────</span></span>
+<span><span class="co">#&gt; ── <span style="color: #00BB00;">assistant</span> [input=46 output=3 cost=$0.00] ───────────────────────────</span></span>
 <span><span class="co">#&gt; Data scientist.</span></span></code></pre></div>
 <p>(This is the technique that <code><a href="../reference/parallel_chat.html">parallel_chat()</a></code> uses
 internally.)</p>
@@ -271,18 +271,18 @@ calling to give the LLM the ability to access real randomness:</p>
 <span><span class="co">#&gt; The total is 9.</span></span>
 <span></span>
 <span><span class="va">chat</span></span>
-<span><span class="co">#&gt; &lt;Chat OpenAI/gpt-4.1-nano turns=5 tokens=151/48 $0.00&gt;</span></span>
-<span><span class="co">#&gt; ── <span style="color: #FFFFFF;">system</span> [0] ─────────────────────────────────────────────────────────</span></span>
+<span><span class="co">#&gt; &lt;Chat OpenAI/gpt-4.1-nano turns=5 input=151 output=48 cost=$0.00&gt;</span></span>
+<span><span class="co">#&gt; ── <span style="color: #FFFFFF;">system</span> ─────────────────────────────────────────────────────────────</span></span>
 <span><span class="co">#&gt; Be terse</span></span>
-<span><span class="co">#&gt; ── <span style="color: #0000BB;">user</span> [47] ──────────────────────────────────────────────────────────</span></span>
+<span><span class="co">#&gt; ── <span style="color: #0000BB;">user</span> ───────────────────────────────────────────────────────────────</span></span>
 <span><span class="co">#&gt; Roll two dice and tell me the total</span></span>
-<span><span class="co">#&gt; ── <span style="color: #00BB00;">assistant</span> [41] ─────────────────────────────────────────────────────</span></span>
+<span><span class="co">#&gt; ── <span style="color: #00BB00;">assistant</span> [input=47 output=41 cost=$0.00] ──────────────────────────</span></span>
 <span><span class="co">#&gt; [<span style="font-weight: bold;">tool request</span> (call_1OtUWtCCMJ6YE8ZNFQtpoyQJ)]: tool_001()</span></span>
 <span><span class="co">#&gt; [<span style="font-weight: bold;">tool request</span> (call_UZw7jatKY7tYN7CfOrlk9j5l)]: tool_001()</span></span>
-<span><span class="co">#&gt; ── <span style="color: #0000BB;">user</span> [16] ──────────────────────────────────────────────────────────</span></span>
+<span><span class="co">#&gt; ── <span style="color: #0000BB;">user</span> ───────────────────────────────────────────────────────────────</span></span>
 <span><span class="co">#&gt; [<span style="font-weight: bold;">tool result</span>  (call_1OtUWtCCMJ6YE8ZNFQtpoyQJ)]: 5</span></span>
 <span><span class="co">#&gt; [<span style="font-weight: bold;">tool result</span>  (call_UZw7jatKY7tYN7CfOrlk9j5l)]: 4</span></span>
-<span><span class="co">#&gt; ── <span style="color: #00BB00;">assistant</span> [7] ──────────────────────────────────────────────────────</span></span>
+<span><span class="co">#&gt; ── <span style="color: #00BB00;">assistant</span> [input=104 output=7 cost=$0.00] ──────────────────────────</span></span>
 <span><span class="co">#&gt; The total is 9.</span></span></code></pre></div>
 <p>You can get access to the underlying conversational turns with
 <code>get_turns()</code>:</p>
@@ -311,8 +311,7 @@ it includes ellmer’s representation of content of the message, as well
 as the exact json that the provider returned:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">turns</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="co">#&gt; &lt;ellmer::Turn&gt;</span></span>
-<span><span class="co">#&gt;  @ role    : chr "assistant"</span></span>
+<span><span class="co">#&gt; &lt;ellmer::AssistantTurn&gt;</span></span>
 <span><span class="co">#&gt;  @ contents:List of 2</span></span>
 <span><span class="co">#&gt;  .. $ : &lt;ellmer::ContentToolRequest&gt;</span></span>
 <span><span class="co">#&gt;  ..  ..@ id       : chr "call_1OtUWtCCMJ6YE8ZNFQtpoyQJ"</span></span>
@@ -342,6 +341,8 @@ as the exact json that the provider returned:</p>
 <span><span class="co">#&gt;  .. .. .. .. @ additional_properties: logi FALSE</span></span>
 <span><span class="co">#&gt;  .. .. .. @ convert    : logi TRUE</span></span>
 <span><span class="co">#&gt;  .. .. .. @ annotations: list()</span></span>
+<span><span class="co">#&gt;  @ text    : chr ""</span></span>
+<span><span class="co">#&gt;  @ role    : chr "assistant"</span></span>
 <span><span class="co">#&gt;  @ json    :List of 8</span></span>
 <span><span class="co">#&gt;  .. $ id                : chr "chatcmpl-Bn2ZPB85PqyXTCCv6mtej2FNEkQLA"</span></span>
 <span><span class="co">#&gt;  .. $ object            : chr "chat.completion"</span></span>
@@ -386,8 +387,8 @@ as the exact json that the provider returned:</p>
 <span><span class="co">#&gt;  .. $ system_fingerprint: chr "fp_38343a2f8f"</span></span>
 <span><span class="co">#&gt;  @ tokens  : Named int [1:3] 47 41 0</span></span>
 <span><span class="co">#&gt;  .. - attr(*, "names")= chr [1:3] "input" "output" "cached_input"</span></span>
-<span><span class="co">#&gt;  @ duration: num NA</span></span>
-<span><span class="co">#&gt;  @ text    : chr ""</span></span></code></pre></div>
+<span><span class="co">#&gt;  @ cost    : 'ellmer_dollars' num 2.11e-05</span></span>
+<span><span class="co">#&gt;  @ duration: num NA</span></span></code></pre></div>
 <p>You can use the <code>@json</code> to extract additional information
 that ellmer might not yet provide to you, but be aware that the
 structure varies heavily from provider-to-provider. The content types
