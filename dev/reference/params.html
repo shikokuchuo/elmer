@@ -80,6 +80,8 @@ across multiple providers.</p>
 <span>  max_tokens <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  log_probs <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  stop_sequences <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  reasoning_effort <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  reasoning_tokens <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -124,6 +126,13 @@ across multiple providers.</p>
 <dd><p>A character vector of tokens to stop generation on.</p></dd>
 
 
+<dt id="arg-reasoning-effort-reasoning-tokens">reasoning_effort, reasoning_tokens<a class="anchor" aria-label="anchor" href="#arg-reasoning-effort-reasoning-tokens"></a></dt>
+<dd><p>How much effort to spend thinking?
+<code>ressoning_effort</code> is a string, like "low", "medium", "high".
+<code>reasoning_tokens</code> is an integer, giving a maximum token budget.
+Each provider only takes one of these two parameters.</p></dd>
+
+
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Additional named parameters to send to the provider.</p></dd>
 
@@ -140,7 +149,7 @@ across multiple providers.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
   </div></footer></body></html>
