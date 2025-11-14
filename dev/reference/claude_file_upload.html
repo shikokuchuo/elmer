@@ -77,7 +77,7 @@ claude_file_delete() deletes the file with the given ID.
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Upload, downloand, and manage files for Claude</h1>
-      <small class="dont-index">Source: <a href="https://github.com/tidyverse/ellmer/blob/main/R/provider-anthropic-files.R" class="external-link"><code>R/provider-anthropic-files.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/tidyverse/ellmer/blob/main/R/provider-claude-files.R" class="external-link"><code>R/provider-claude-files.R</code></a></small>
       <div class="d-none name"><code>claude_file_upload.Rd</code></div>
     </div>
 
@@ -155,10 +155,9 @@ public API.</p></dd>
 
 
 <dt id="arg-credentials">credentials<a class="anchor" aria-label="anchor" href="#arg-credentials"></a></dt>
-<dd><p>A function that returns the API key to use for authentication.</p>
-<p>You generally should not need this argument; instead set the <code>ANTHROPIC_API_KEY</code> environment variable.
-The best place to set this is in <code>.Renviron</code>,
-which you can easily edit by calling <code>usethis::edit_r_environ()</code>.</p></dd>
+<dd><p>Override the default credentials. You generally should not need this argument; instead set the <code>ANTHROPIC_API_KEY</code> environment variable. The best place to set this is in <code>.Renviron</code>,
+which you can easily edit by calling <code>usethis::edit_r_environ()</code>.</p>
+<p>If you do need additional control, this argument takes a zero-argument function that returns either a string (the API key), or a named list (added as additional headers to every request).</p></dd>
 
 
 <dt id="arg-file-id">file_id<a class="anchor" aria-label="anchor" href="#arg-file-id"></a></dt>

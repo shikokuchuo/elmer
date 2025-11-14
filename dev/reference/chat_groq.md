@@ -41,16 +41,18 @@ chat_groq(
 
 - credentials:
 
-  A function that returns the API key to use for authentication.
+  Override the default credentials. You generally should not need this
+  argument; instead set the `GROQ_API_KEY` environment variable. The
+  best place to set this is in `.Renviron`, which you can easily edit by
+  calling `usethis::edit_r_environ()`.
 
-  You generally should not need this argument; instead set the
-  `GROQ_API_KEY` environment variable. The best place to set this is in
-  `.Renviron`, which you can easily edit by calling
-  `usethis::edit_r_environ()`.
+  If you do need additional control, this argument takes a zero-argument
+  function that returns either a string (the API key), or a named list
+  (added as additional headers to every request).
 
 - model:
 
-  The model to use for the chat (defaults to "llama3-8b-8192"). We
+  The model to use for the chat (defaults to "llama-3.1-8b-instant"). We
   regularly update the default, so we strongly recommend explicitly
   specifying a model for anything other than casual use.
 

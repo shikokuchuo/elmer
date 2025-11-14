@@ -33,7 +33,7 @@ data.
   [`chat_google_vertex()`](https://ellmer.tidyverse.org/dev/reference/chat_google_gemini.md)
   [`models_google_gemini()`](https://ellmer.tidyverse.org/dev/reference/chat_google_gemini.md)
   [`models_google_vertex()`](https://ellmer.tidyverse.org/dev/reference/chat_google_gemini.md)
-  : Chat with a Google Gemini or Vertex AI model
+  **\[experimental\]** : Chat with a Google Gemini or Vertex AI model
 - [`chat_groq()`](https://ellmer.tidyverse.org/dev/reference/chat_groq.md)
   : Chat with a model hosted on Groq
 - [`chat_huggingface()`](https://ellmer.tidyverse.org/dev/reference/chat_huggingface.md)
@@ -76,6 +76,16 @@ data.
   [`claude_file_download()`](https://ellmer.tidyverse.org/dev/reference/claude_file_upload.md)
   [`claude_file_delete()`](https://ellmer.tidyverse.org/dev/reference/claude_file_upload.md)
   **\[experimental\]** : Upload, downloand, and manage files for Claude
+- [`claude_tool_web_search()`](https://ellmer.tidyverse.org/dev/reference/claude_tool_web_search.md)
+  : Claude web search tool
+- [`claude_tool_web_fetch()`](https://ellmer.tidyverse.org/dev/reference/claude_tool_web_fetch.md)
+  : Claude web fetch tool
+- [`google_tool_web_search()`](https://ellmer.tidyverse.org/dev/reference/google_tool_web_search.md)
+  : Google web search (grounding) tool
+- [`google_tool_web_fetch()`](https://ellmer.tidyverse.org/dev/reference/google_tool_web_fetch.md)
+  : Google URL fetch tool
+- [`openai_tool_web_search()`](https://ellmer.tidyverse.org/dev/reference/openai_tool_web_search.md)
+  : OpenAI web search tool
 
 ## Chat helpers
 
