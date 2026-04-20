@@ -2,6 +2,78 @@
 
 ## ellmer (development version)
 
+- New
+  [`chat_lmstudio()`](https://ellmer.tidyverse.org/dev/reference/chat_lmstudio.md)
+  and
+  [`models_lmstudio()`](https://ellmer.tidyverse.org/dev/reference/chat_lmstudio.md)
+  provide support for [LM Studio](https://lmstudio.ai), a local model
+  server with an OpenAI-compatible API
+  ([\#963](https://github.com/tidyverse/ellmer/issues/963)).
+- Fixed three bugs that caused errors when streaming web search results:
+  Claude’s `citations_delta` events were mishandled, `server_tool_use`
+  input wasn’t parsed from JSON during streaming, and OpenAI’s
+  `web_search_call` failed for non-search action types like `open_page`
+  ([\#941](https://github.com/tidyverse/ellmer/issues/941)).
+- [`chat_aws_bedrock()`](https://ellmer.tidyverse.org/dev/reference/chat_aws_bedrock.md)
+  gains a `cache` parameter for prompt caching. The default, `"auto"`,
+  enables caching for models known to support it (Anthropic Claude and
+  Amazon Nova) and disables it otherwise
+  ([\#954](https://github.com/tidyverse/ellmer/issues/954)).
+- Built-in tools (e.g.,
+  [`openai_tool_web_search()`](https://ellmer.tidyverse.org/dev/reference/openai_tool_web_search.md),
+  [`claude_tool_web_search()`](https://ellmer.tidyverse.org/dev/reference/claude_tool_web_search.md))
+  now include `description` and `annotations` properties, making their
+  metadata consistent with user-defined tools created by
+  [`tool()`](https://ellmer.tidyverse.org/dev/reference/tool.md)
+  ([\#942](https://github.com/tidyverse/ellmer/issues/942)).
+- New
+  [`stream_controller()`](https://ellmer.tidyverse.org/dev/reference/stream_controller.md)
+  enables programmatic cancellation of streaming chat responses,
+  e.g. from a Shiny “Cancel” button with `chat$stream()` or
+  `chat$stream_async()`. Streaming turns are now saved incrementally so
+  that partial responses survive cancellation, interrupts (Ctrl-C), and
+  errors. Incomplete turns are recorded as `AssistantPartialTurn`
+  objects, display as interrupted in the chat history, and are included
+  in subsequent model context like complete turns
+  ([\#643](https://github.com/tidyverse/ellmer/issues/643)).
+- `default_google_credentials()` no longer skips application default
+  credentials (e.g. `GOOGLE_APPLICATION_CREDENTIALS`) in interactive
+  sessions, instead falling through to the OAuth browser flow only when
+  no gargle token is available
+  ([@stefanlinner](https://github.com/stefanlinner),
+  [\#922](https://github.com/tidyverse/ellmer/issues/922)).
+- [`chat_databricks()`](https://ellmer.tidyverse.org/dev/reference/chat_databricks.md)
+  (and other
+  [`chat_openai_compatible()`](https://ellmer.tidyverse.org/dev/reference/chat_openai_compatible.md)
+  providers) no longer fail with HTTP 400 when the conversation history
+  contains empty `ContentText("")` objects, which can occur during tool
+  calling ([@JamesHWade](https://github.com/JamesHWade),
+  [\#932](https://github.com/tidyverse/ellmer/issues/932)).
+- [`chat_groq()`](https://ellmer.tidyverse.org/dev/reference/chat_groq.md)
+  now supports structured chat
+  ([@CoryMcCartan](https://github.com/CoryMcCartan),
+  [\#930](https://github.com/tidyverse/ellmer/issues/930)).
+- ellmer will now distinguish text content from thinking content while
+  streaming, allowing downstream packages like shinychat to provide
+  specific UI for thinking content
+  ([@simonpcouch](https://github.com/simonpcouch),
+  [\#909](https://github.com/tidyverse/ellmer/issues/909)).
+- [`chat_github()`](https://ellmer.tidyverse.org/dev/reference/chat_github.md)
+  now uses
+  [`chat_openai_compatible()`](https://ellmer.tidyverse.org/dev/reference/chat_openai_compatible.md)
+  for improved compatibility, and
+  [`models_github()`](https://ellmer.tidyverse.org/dev/reference/chat_github.md)
+  now supports custom `base_url` configuration
+  ([@D-M4rk](https://github.com/D-M4rk),
+  [\#877](https://github.com/tidyverse/ellmer/issues/877)).
+- [`chat_ollama()`](https://ellmer.tidyverse.org/dev/reference/chat_ollama.md)
+  now contains a slot for `top_k` within the `params` argument
+  ([@frankiethull](https://github.com/frankiethull)).
+
+## ellmer 0.4.0
+
+CRAN release: 2025-11-15
+
 ### Lifecycle changes
 
 - [`chat_claude()`](https://ellmer.tidyverse.org/dev/reference/chat_anthropic.md)
@@ -795,7 +867,7 @@ CRAN release: 2025-05-17
   app that powers
   [`live_browser()`](https://ellmer.tidyverse.org/dev/reference/live_console.md)
   via
-  [`shinychat::chat_app()`](https://rdrr.io/pkg/shinychat/man/chat_app.html),
+  [`shinychat::chat_app()`](https://posit-dev.github.io/shinychat/r/reference/chat_app.html),
   as well as a Shiny module for easily including a chat interface for an
   ellmer `Chat` object in your Shiny apps
   ([\#397](https://github.com/tidyverse/ellmer/issues/397),
