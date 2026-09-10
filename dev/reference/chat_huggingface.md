@@ -1,5 +1,7 @@
 # Chat with a model hosted on Hugging Face Serverless Inference API
 
+![\[Community supported provider\]](figures/support-community.svg)
+
 [Hugging Face](https://huggingface.co/) hosts a variety of open-source
 and proprietary AI models available via their Inference API. To use the
 Hugging Face API, you must have an Access Token, which you can obtain
@@ -60,9 +62,9 @@ chat_huggingface(
 - model:
 
   The model to use for the chat (defaults to
-  "meta-llama/Llama-3.1-8B-Instruct"). We regularly update the default,
-  so we strongly recommend explicitly specifying a model for anything
-  other than casual use.
+  "Qwen/Qwen3-235B-A22B-Instruct-2507"). We regularly update the
+  default, so we strongly recommend explicitly specifying a model for
+  anything other than casual use.
 
 - api_args:
 
@@ -113,7 +115,8 @@ Other chatbots:
 [`chat_openai_compatible()`](https://ellmer.tidyverse.org/dev/reference/chat_openai_compatible.md),
 [`chat_openrouter()`](https://ellmer.tidyverse.org/dev/reference/chat_openrouter.md),
 [`chat_perplexity()`](https://ellmer.tidyverse.org/dev/reference/chat_perplexity.md),
-[`chat_portkey()`](https://ellmer.tidyverse.org/dev/reference/chat_portkey.md)
+[`chat_portkey()`](https://ellmer.tidyverse.org/dev/reference/chat_portkey.md),
+[`chat_posit()`](https://ellmer.tidyverse.org/dev/reference/chat_posit.md)
 
 ## Examples
 

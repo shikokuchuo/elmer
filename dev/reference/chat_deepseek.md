@@ -1,5 +1,7 @@
 # Chat with a model hosted on DeepSeek
 
+![\[Official supported provider\]](figures/support-official.svg)
+
 Sign up at <https://platform.deepseek.com>.
 
 Built on top of
@@ -24,6 +26,12 @@ chat_deepseek(
   api_args = list(),
   echo = NULL,
   api_headers = character()
+)
+
+models_deepseek(
+  base_url = "https://api.deepseek.com",
+  api_key = NULL,
+  credentials = NULL
 )
 ```
 
@@ -54,7 +62,7 @@ chat_deepseek(
 
 - model:
 
-  The model to use for the chat (defaults to "deepseek-chat"). We
+  The model to use for the chat (defaults to "deepseek-v4-flash"). We
   regularly update the default, so we strongly recommend explicitly
   specifying a model for anything other than casual use.
 
@@ -112,7 +120,8 @@ Other chatbots:
 [`chat_openai_compatible()`](https://ellmer.tidyverse.org/dev/reference/chat_openai_compatible.md),
 [`chat_openrouter()`](https://ellmer.tidyverse.org/dev/reference/chat_openrouter.md),
 [`chat_perplexity()`](https://ellmer.tidyverse.org/dev/reference/chat_perplexity.md),
-[`chat_portkey()`](https://ellmer.tidyverse.org/dev/reference/chat_portkey.md)
+[`chat_portkey()`](https://ellmer.tidyverse.org/dev/reference/chat_portkey.md),
+[`chat_posit()`](https://ellmer.tidyverse.org/dev/reference/chat_posit.md)
 
 ## Examples
 

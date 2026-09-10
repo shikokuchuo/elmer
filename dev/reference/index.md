@@ -10,6 +10,18 @@ data.
 
 - [`chat()`](https://ellmer.tidyverse.org/dev/reference/chat-any.md) :
   Chat with any provider
+- [`Chat`](https://ellmer.tidyverse.org/dev/reference/Chat.md) : The
+  Chat object
+- [`token_usage()`](https://ellmer.tidyverse.org/dev/reference/token_usage.md)
+  : Report on token usage in the current session
+- [`models_update_prices()`](https://ellmer.tidyverse.org/dev/reference/models_update_prices.md)
+  : Update cached model pricing data
+
+### Official providers
+
+Actively maintained, with priority support for bug fixes and new
+features.
+
 - [`chat_anthropic()`](https://ellmer.tidyverse.org/dev/reference/chat_anthropic.md)
   [`chat_claude()`](https://ellmer.tidyverse.org/dev/reference/chat_anthropic.md)
   [`models_claude()`](https://ellmer.tidyverse.org/dev/reference/chat_anthropic.md)
@@ -20,21 +32,41 @@ data.
   : Chat with an AWS bedrock model
 - [`chat_azure_openai()`](https://ellmer.tidyverse.org/dev/reference/chat_azure_openai.md)
   : Chat with a model hosted on Azure OpenAI
-- [`chat_cloudflare()`](https://ellmer.tidyverse.org/dev/reference/chat_cloudflare.md)
-  : Chat with a model hosted on CloudFlare
 - [`chat_databricks()`](https://ellmer.tidyverse.org/dev/reference/chat_databricks.md)
   : Chat with a model hosted on Databricks
 - [`chat_deepseek()`](https://ellmer.tidyverse.org/dev/reference/chat_deepseek.md)
+  [`models_deepseek()`](https://ellmer.tidyverse.org/dev/reference/chat_deepseek.md)
   : Chat with a model hosted on DeepSeek
 - [`chat_github()`](https://ellmer.tidyverse.org/dev/reference/chat_github.md)
   [`models_github()`](https://ellmer.tidyverse.org/dev/reference/chat_github.md)
-  : Chat with a model hosted on the GitHub model marketplace
+  **\[deprecated\]** : Chat with a model hosted on the GitHub model
+  marketplace
 - [`chat_google_gemini()`](https://ellmer.tidyverse.org/dev/reference/chat_google_gemini.md)
   [`chat_google_vertex()`](https://ellmer.tidyverse.org/dev/reference/chat_google_gemini.md)
   [`models_google_gemini()`](https://ellmer.tidyverse.org/dev/reference/chat_google_gemini.md)
   [`models_google_vertex()`](https://ellmer.tidyverse.org/dev/reference/chat_google_gemini.md)
-  **\[experimental\]** : Chat with a Google Gemini or Vertex AI model
+  : Chat with a Google Gemini or Vertex AI model
+- [`chat_ollama()`](https://ellmer.tidyverse.org/dev/reference/chat_ollama.md)
+  [`models_ollama()`](https://ellmer.tidyverse.org/dev/reference/chat_ollama.md)
+  : Chat with a local Ollama model
+- [`chat_openai()`](https://ellmer.tidyverse.org/dev/reference/chat_openai.md)
+  [`models_openai()`](https://ellmer.tidyverse.org/dev/reference/chat_openai.md)
+  : Chat with an OpenAI model
+- [`chat_posit()`](https://ellmer.tidyverse.org/dev/reference/chat_posit.md)
+  [`models_posit()`](https://ellmer.tidyverse.org/dev/reference/chat_posit.md)
+  : Chat with a model hosted by Posit AI
+- [`chat_snowflake()`](https://ellmer.tidyverse.org/dev/reference/chat_snowflake.md)
+  : Chat with a model hosted on Snowflake
+
+### Community providers
+
+Community contributed and maintained. Contributions to improve these
+providers are especially welcome.
+
+- [`chat_cloudflare()`](https://ellmer.tidyverse.org/dev/reference/chat_cloudflare.md)
+  : Chat with a model hosted on CloudFlare
 - [`chat_groq()`](https://ellmer.tidyverse.org/dev/reference/chat_groq.md)
+  [`models_groq()`](https://ellmer.tidyverse.org/dev/reference/chat_groq.md)
   : Chat with a model hosted on Groq
 - [`chat_huggingface()`](https://ellmer.tidyverse.org/dev/reference/chat_huggingface.md)
   : Chat with a model hosted on Hugging Face Serverless Inference API
@@ -44,12 +76,6 @@ data.
 - [`chat_mistral()`](https://ellmer.tidyverse.org/dev/reference/chat_mistral.md)
   [`models_mistral()`](https://ellmer.tidyverse.org/dev/reference/chat_mistral.md)
   : Chat with a model hosted on Mistral's La Platforme
-- [`chat_ollama()`](https://ellmer.tidyverse.org/dev/reference/chat_ollama.md)
-  [`models_ollama()`](https://ellmer.tidyverse.org/dev/reference/chat_ollama.md)
-  : Chat with a local Ollama model
-- [`chat_openai()`](https://ellmer.tidyverse.org/dev/reference/chat_openai.md)
-  [`models_openai()`](https://ellmer.tidyverse.org/dev/reference/chat_openai.md)
-  : Chat with an OpenAI model
 - [`chat_openai_compatible()`](https://ellmer.tidyverse.org/dev/reference/chat_openai_compatible.md)
   : Chat with an OpenAI-compatible model
 - [`chat_openrouter()`](https://ellmer.tidyverse.org/dev/reference/chat_openrouter.md)
@@ -59,26 +85,20 @@ data.
 - [`chat_portkey()`](https://ellmer.tidyverse.org/dev/reference/chat_portkey.md)
   [`models_portkey()`](https://ellmer.tidyverse.org/dev/reference/chat_portkey.md)
   : Chat with a model hosted on PortkeyAI
-- [`chat_snowflake()`](https://ellmer.tidyverse.org/dev/reference/chat_snowflake.md)
-  : Chat with a model hosted on Snowflake
 - [`chat_vllm()`](https://ellmer.tidyverse.org/dev/reference/chat_vllm.md)
   [`models_vllm()`](https://ellmer.tidyverse.org/dev/reference/chat_vllm.md)
   : Chat with a model hosted by vLLM
-- [`Chat`](https://ellmer.tidyverse.org/dev/reference/Chat.md) : The
-  Chat object
-- [`token_usage()`](https://ellmer.tidyverse.org/dev/reference/token_usage.md)
-  : Report on token usage in the current session
 
 ### Provider-specific helpers
 
 - [`google_upload()`](https://ellmer.tidyverse.org/dev/reference/google_upload.md)
-  **\[experimental\]** : Upload a file to gemini
+  **\[deprecated\]** : Upload a file to gemini
 - [`claude_file_upload()`](https://ellmer.tidyverse.org/dev/reference/claude_file_upload.md)
   [`claude_file_list()`](https://ellmer.tidyverse.org/dev/reference/claude_file_upload.md)
   [`claude_file_get()`](https://ellmer.tidyverse.org/dev/reference/claude_file_upload.md)
   [`claude_file_download()`](https://ellmer.tidyverse.org/dev/reference/claude_file_upload.md)
   [`claude_file_delete()`](https://ellmer.tidyverse.org/dev/reference/claude_file_upload.md)
-  **\[experimental\]** : Upload, downloand, and manage files for Claude
+  **\[deprecated\]** : Upload, download, and manage files for Claude
 - [`claude_tool_web_search()`](https://ellmer.tidyverse.org/dev/reference/claude_tool_web_search.md)
   : Claude web search tool
 - [`claude_tool_web_fetch()`](https://ellmer.tidyverse.org/dev/reference/claude_tool_web_fetch.md)
@@ -94,6 +114,9 @@ data.
 
 - [`create_tool_def()`](https://ellmer.tidyverse.org/dev/reference/create_tool_def.md)
   : Create metadata for a tool
+- [`content_document_file()`](https://ellmer.tidyverse.org/dev/reference/content_document_file.md)
+  [`content_document_url()`](https://ellmer.tidyverse.org/dev/reference/content_document_file.md)
+  : Encode documents for chat input
 - [`content_image_url()`](https://ellmer.tidyverse.org/dev/reference/content_image_url.md)
   [`content_image_file()`](https://ellmer.tidyverse.org/dev/reference/content_image_url.md)
   [`content_image_plot()`](https://ellmer.tidyverse.org/dev/reference/content_image_url.md)
@@ -129,6 +152,10 @@ data.
   Define a tool
 - [`tool_annotations()`](https://ellmer.tidyverse.org/dev/reference/tool_annotations.md)
   : Tool annotations
+- [`tool_context()`](https://ellmer.tidyverse.org/dev/reference/tool_context.md)
+  [`with_tool_context()`](https://ellmer.tidyverse.org/dev/reference/tool_context.md)
+  [`local_tool_context()`](https://ellmer.tidyverse.org/dev/reference/tool_context.md)
+  : Access the current tool context
 - [`tool_reject()`](https://ellmer.tidyverse.org/dev/reference/tool_reject.md)
   : Reject a tool call
 - [`type_boolean()`](https://ellmer.tidyverse.org/dev/reference/type_boolean.md)
@@ -150,24 +177,41 @@ need to learn more about the objects if you’re doing something that’s
 only supported by one provider, or if you’re implementing a new
 provider.
 
+- [`Chat`](https://ellmer.tidyverse.org/dev/reference/Chat.md) : The
+  Chat object
 - [`Provider()`](https://ellmer.tidyverse.org/dev/reference/Provider.md)
   : A chatbot provider
+- [`Model()`](https://ellmer.tidyverse.org/dev/reference/Model.md) : A
+  model configuration
 - [`Turn()`](https://ellmer.tidyverse.org/dev/reference/Turn.md)
   [`UserTurn()`](https://ellmer.tidyverse.org/dev/reference/Turn.md)
   [`SystemTurn()`](https://ellmer.tidyverse.org/dev/reference/Turn.md)
   [`AssistantTurn()`](https://ellmer.tidyverse.org/dev/reference/Turn.md)
   [`AssistantPartialTurn()`](https://ellmer.tidyverse.org/dev/reference/Turn.md)
   : A user, assistant, or system turn
+- [`Round()`](https://ellmer.tidyverse.org/dev/reference/Round.md) : A
+  round of conversation
 - [`Content()`](https://ellmer.tidyverse.org/dev/reference/Content.md)
   [`ContentText()`](https://ellmer.tidyverse.org/dev/reference/Content.md)
+  [`ContentCitation()`](https://ellmer.tidyverse.org/dev/reference/Content.md)
   [`ContentImage()`](https://ellmer.tidyverse.org/dev/reference/Content.md)
   [`ContentImageRemote()`](https://ellmer.tidyverse.org/dev/reference/Content.md)
   [`ContentImageInline()`](https://ellmer.tidyverse.org/dev/reference/Content.md)
   [`ContentToolRequest()`](https://ellmer.tidyverse.org/dev/reference/Content.md)
   [`ContentToolResult()`](https://ellmer.tidyverse.org/dev/reference/Content.md)
+  [`ContentUploaded()`](https://ellmer.tidyverse.org/dev/reference/Content.md)
   [`ContentThinking()`](https://ellmer.tidyverse.org/dev/reference/Content.md)
   [`ContentPDF()`](https://ellmer.tidyverse.org/dev/reference/Content.md)
+  [`ContentDocument()`](https://ellmer.tidyverse.org/dev/reference/Content.md)
   : Content types received from and sent to a chatbot
+- [`Source()`](https://ellmer.tidyverse.org/dev/reference/Source.md)
+  [`WebSource()`](https://ellmer.tidyverse.org/dev/reference/Source.md)
+  **\[experimental\]** : Sources referenced by model content
+- [`ContentToolRequestSearch()`](https://ellmer.tidyverse.org/dev/reference/ContentWebActivity.md)
+  [`ContentToolResponseSearch()`](https://ellmer.tidyverse.org/dev/reference/ContentWebActivity.md)
+  [`ContentToolRequestFetch()`](https://ellmer.tidyverse.org/dev/reference/ContentWebActivity.md)
+  [`ContentToolResponseFetch()`](https://ellmer.tidyverse.org/dev/reference/ContentWebActivity.md)
+  **\[experimental\]** : Built-in web activity content
 - [`TypeBasic()`](https://ellmer.tidyverse.org/dev/reference/Type.md)
   [`TypeEnum()`](https://ellmer.tidyverse.org/dev/reference/Type.md)
   [`TypeArray()`](https://ellmer.tidyverse.org/dev/reference/Type.md)
@@ -175,6 +219,8 @@ provider.
   [`TypeIgnore()`](https://ellmer.tidyverse.org/dev/reference/Type.md)
   [`TypeObject()`](https://ellmer.tidyverse.org/dev/reference/Type.md) :
   Type definitions for function calling and structured data extraction.
+- [`ToolDef()`](https://ellmer.tidyverse.org/dev/reference/ToolDef.md) :
+  A tool definition
 
 ## Utilities
 

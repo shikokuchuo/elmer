@@ -1,17 +1,9 @@
 # Chat with a model hosted on the GitHub model marketplace
 
-GitHub Models hosts a number of open source and OpenAI models. To access
-the GitHub model marketplace, you will need to apply for and be accepted
-into the beta access program. See
-<https://github.com/marketplace/models> for details.
+**\[deprecated\]**
 
-This function is a lightweight wrapper around
-[`chat_openai_compatible()`](https://ellmer.tidyverse.org/dev/reference/chat_openai_compatible.md)
-with the defaults tweaked for the GitHub Models marketplace.
-
-GitHub also supports the Azure AI Inference SDK, which you can use by
-setting `base_url` to `"https://models.inference.ai.azure.com/"`. This
-endpoint was used in ellmer v0.3.0 and earlier.
+`chat_github()` and `models_github()` are defunct because GitHub Models
+was retired on 2026-07-30.
 
 ## Usage
 
@@ -43,7 +35,7 @@ models_github(
 
 - base_url:
 
-  The base URL to the endpoint; the default is OpenAI's public API.
+  The base URL to the API endpoint.
 
 - api_key:
 
@@ -62,7 +54,7 @@ models_github(
 
 - model:
 
-  The model to use for the chat (defaults to "gpt-4o"). We regularly
+  The model to use for the chat (defaults to "gpt-5"). We regularly
   update the default, so we strongly recommend explicitly specifying a
   model for anything other than casual use.
 
@@ -120,7 +112,8 @@ Other chatbots:
 [`chat_openai_compatible()`](https://ellmer.tidyverse.org/dev/reference/chat_openai_compatible.md),
 [`chat_openrouter()`](https://ellmer.tidyverse.org/dev/reference/chat_openrouter.md),
 [`chat_perplexity()`](https://ellmer.tidyverse.org/dev/reference/chat_perplexity.md),
-[`chat_portkey()`](https://ellmer.tidyverse.org/dev/reference/chat_portkey.md)
+[`chat_portkey()`](https://ellmer.tidyverse.org/dev/reference/chat_portkey.md),
+[`chat_posit()`](https://ellmer.tidyverse.org/dev/reference/chat_posit.md)
 
 ## Examples
 

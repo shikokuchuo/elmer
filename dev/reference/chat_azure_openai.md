@@ -1,7 +1,9 @@
 # Chat with a model hosted on Azure OpenAI
 
-The [Azure OpenAI
-server](https://azure.microsoft.com/en-us/products/ai-services/openai-service)
+![\[Official supported provider\]](figures/support-official.svg)
+
+[Azure OpenAI in Foundry
+Models](https://azure.microsoft.com/en-us/products/ai-foundry/models/openai/)
 hosts a number of open source models as well as proprietary models from
 OpenAI.
 
@@ -133,7 +135,8 @@ Other chatbots:
 [`chat_openai_compatible()`](https://ellmer.tidyverse.org/dev/reference/chat_openai_compatible.md),
 [`chat_openrouter()`](https://ellmer.tidyverse.org/dev/reference/chat_openrouter.md),
 [`chat_perplexity()`](https://ellmer.tidyverse.org/dev/reference/chat_perplexity.md),
-[`chat_portkey()`](https://ellmer.tidyverse.org/dev/reference/chat_portkey.md)
+[`chat_portkey()`](https://ellmer.tidyverse.org/dev/reference/chat_portkey.md),
+[`chat_posit()`](https://ellmer.tidyverse.org/dev/reference/chat_posit.md)
 
 ## Examples
 

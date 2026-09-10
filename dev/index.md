@@ -22,12 +22,18 @@ ellmer is one of a number of LLM-related packages created by Posit:
 You can install ellmer from CRAN with:
 
 ``` r
+
 install.packages("ellmer")
 ```
 
 ## Providers
 
-ellmer supports a wide variety of model providers:
+ellmer supports a wide variety of model providers. Official providers
+are actively maintained, with priority support for bug fixes and new
+features. Community providers are contributed and maintained by the
+community; contributions to improve them are especially welcome.
+
+### Official providers
 
 - Anthropic’s Claude:
   [`chat_anthropic()`](https://ellmer.tidyverse.org/dev/reference/chat_anthropic.md).
@@ -35,34 +41,40 @@ ellmer supports a wide variety of model providers:
   [`chat_aws_bedrock()`](https://ellmer.tidyverse.org/dev/reference/chat_aws_bedrock.md).
 - Azure OpenAI:
   [`chat_azure_openai()`](https://ellmer.tidyverse.org/dev/reference/chat_azure_openai.md).
-- Cloudflare:
-  [`chat_cloudflare()`](https://ellmer.tidyverse.org/dev/reference/chat_cloudflare.md).
 - Databricks:
   [`chat_databricks()`](https://ellmer.tidyverse.org/dev/reference/chat_databricks.md).
 - DeepSeek:
   [`chat_deepseek()`](https://ellmer.tidyverse.org/dev/reference/chat_deepseek.md).
-- GitHub model marketplace:
-  [`chat_github()`](https://ellmer.tidyverse.org/dev/reference/chat_github.md).
 - Google Gemini/Vertex AI:
   [`chat_google_gemini()`](https://ellmer.tidyverse.org/dev/reference/chat_google_gemini.md),
   [`chat_google_vertex()`](https://ellmer.tidyverse.org/dev/reference/chat_google_gemini.md).
-- Groq:
-  [`chat_groq()`](https://ellmer.tidyverse.org/dev/reference/chat_groq.md).
-- Hugging Face:
-  [`chat_huggingface()`](https://ellmer.tidyverse.org/dev/reference/chat_huggingface.md).
-- Mistral:
-  [`chat_mistral()`](https://ellmer.tidyverse.org/dev/reference/chat_mistral.md).
 - Ollama:
   [`chat_ollama()`](https://ellmer.tidyverse.org/dev/reference/chat_ollama.md).
 - OpenAI:
   [`chat_openai()`](https://ellmer.tidyverse.org/dev/reference/chat_openai.md).
+- Posit AI:
+  [`chat_posit()`](https://ellmer.tidyverse.org/dev/reference/chat_posit.md).
+- Snowflake Cortex:
+  [`chat_snowflake()`](https://ellmer.tidyverse.org/dev/reference/chat_snowflake.md).
+
+### Community providers
+
+- Cloudflare:
+  [`chat_cloudflare()`](https://ellmer.tidyverse.org/dev/reference/chat_cloudflare.md).
+- Groq:
+  [`chat_groq()`](https://ellmer.tidyverse.org/dev/reference/chat_groq.md).
+- Hugging Face:
+  [`chat_huggingface()`](https://ellmer.tidyverse.org/dev/reference/chat_huggingface.md).
+- LM Studio:
+  [`chat_lmstudio()`](https://ellmer.tidyverse.org/dev/reference/chat_lmstudio.md).
+- Mistral:
+  [`chat_mistral()`](https://ellmer.tidyverse.org/dev/reference/chat_mistral.md).
 - OpenRouter:
   [`chat_openrouter()`](https://ellmer.tidyverse.org/dev/reference/chat_openrouter.md).
 - perplexity.ai:
   [`chat_perplexity()`](https://ellmer.tidyverse.org/dev/reference/chat_perplexity.md).
-- Snowflake Cortex:
-  [`chat_snowflake()`](https://ellmer.tidyverse.org/dev/reference/chat_snowflake.md)
-  and `chat_cortex_analyst()`.
+- Portkey:
+  [`chat_portkey()`](https://ellmer.tidyverse.org/dev/reference/chat_portkey.md).
 - VLLM:
   [`chat_vllm()`](https://ellmer.tidyverse.org/dev/reference/chat_vllm.md).
 
@@ -84,16 +96,15 @@ freedom, so we have a few recommendations to help you get started:
   [`chat_anthropic()`](https://ellmer.tidyverse.org/dev/reference/chat_anthropic.md)
   are good places to start.
   [`chat_openai()`](https://ellmer.tidyverse.org/dev/reference/chat_openai.md)
-  defaults to **GPT-4.1**, but you can use `model = "gpt-4-1-nano"` for
-  a cheaper, faster model, or `model = "o3"` for more complex reasoning.
+  defaults to **GPT-5.6 Terra**, but you can use
+  `model = "gpt-5.6-luna"` for a cheaper, faster model.
   [`chat_anthropic()`](https://ellmer.tidyverse.org/dev/reference/chat_anthropic.md)
-  is also good; it defaults to **Claude 4.0 Sonnet**, which we have
-  found to be particularly good at writing R code.
+  defaults to **Claude Sonnet 5**, which we have found to be
+  particularly good at writing R code.
 
 - [`chat_google_gemini()`](https://ellmer.tidyverse.org/dev/reference/chat_google_gemini.md)
-  is a strong model with generous free tier (with the downside that
-  [your data is
-  used](https://ai.google.dev/gemini-api/terms#unpaid-services) to
+  is a strong model with a free tier (with the downside that [your data
+  is used](https://ai.google.dev/gemini-api/terms#unpaid-services) to
   improve the model), making it a great place to start if you don’t want
   to spend any money.
 
@@ -134,6 +145,7 @@ you are working interactively or programmatically. They all start with
 creating a new chat object:
 
 ``` r
+
 library(ellmer)
 
 chat <- chat_openai("Be terse", model = "gpt-4o-mini")
@@ -150,6 +162,7 @@ chat directly in your R console or browser with `live_console(chat)` or
 [`live_browser()`](https://ellmer.tidyverse.org/dev/reference/live_console.md):
 
 ``` r
+
 live_console(chat)
 #> ╔════════════════════════════════════════════════════════╗
 #> ║  Entering chat console. Use """ for multi-line input.  ║
@@ -177,17 +190,18 @@ The second most interactive way to chat is to call the
 method:
 
 ``` r
+
 chat$chat("What preceding languages most influenced R?")
-#> R was primarily influenced by S, a language developed at Bell Laboratories. 
-#> Other notable influences include:
-#> 
-#> 1. **Scheme** - For functional programming concepts.
-#> 2. **LISP** - For its powerful data manipulation features.
-#> 3. **C** - For performance and system-level access.
-#> 4. **Fortran** - For numerical and statistical computations.
-#> 
-#> These languages contributed to R's syntax, data structures, and functional 
-#> programming capabilities.
+#> R was primarily influenced by:
+#>
+#> 1. **S** - The predecessor to R, which introduced many foundational concepts.
+#> 2. **Scheme** - A dialect of Lisp that influenced R's functional programming
+#> aspects.
+#> 3. **Fortran** - Influenced R's efficiency and mathematical capabilities.
+#> 4. **C** - Impacted R's performance and low-level programming features.
+#>
+#> These languages contributed to R's design and functionality in statistics and
+#> data analysis.
 ```
 
 If you initialize the chat object in the global environment, the `chat`
@@ -203,16 +217,17 @@ and/or
 [`content_image_url()`](https://ellmer.tidyverse.org/dev/reference/content_image_url.md):
 
 ``` r
+
 chat$chat(
   content_image_url("https://www.r-project.org/Rlogo.png"),
   "Can you explain this logo?"
 )
-#> The logo consists of a stylized letter "R" in blue, surrounded by a gray oval 
-#> shape. The design reflects the programming language R, which is widely used for
-#> statistical computing and graphics. The color choice often symbolizes clarity 
-#> and professionalism, aligning with R's use in data analysis and research. The 
-#> logo encapsulates the language's focus on data visualization and statistical 
-#> methods.
+#> The logo features a stylized letter "R" within a circular shape. The design
+#> reflects the programming language R, which is widely used for statistical
+#> analysis and data visualization. The circular element suggests continuity and
+#> completeness, while the bold "R" emphasizes its identity. Overall, the logo
+#> conveys modernity and practicality, aligning with R's functionality in data
+#> science.
 ```
 
 ### Streaming vs capturing
@@ -223,6 +238,7 @@ creating the chat object or when calling `$chat()`. Set `echo = "none"`
 to return a string instead:
 
 ``` r
+
 my_function <- function() {
   chat <- chat_openai("Be terse", model = "gpt-4o-mini", echo = "none")
   chat$chat("What is 6 times 7?")
@@ -250,3 +266,6 @@ ellmer comes with a bunch of vignettes to help you learn more:
   [`vignette("structured-data")`](https://ellmer.tidyverse.org/dev/articles/structured-data.md).
 - Learn about streaming and async APIs in
   [`vignette("streaming-async")`](https://ellmer.tidyverse.org/dev/articles/streaming-async.md).
+- Learn tips for programming with ellmer, including inside your own
+  package, in
+  [`vignette("programming")`](https://ellmer.tidyverse.org/dev/articles/programming.md).

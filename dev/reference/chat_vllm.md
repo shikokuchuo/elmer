@@ -1,5 +1,7 @@
 # Chat with a model hosted by vLLM
 
+![\[Community supported provider\]](figures/support-community.svg)
+
 [vLLM](https://docs.vllm.ai/en/latest/) is an open source library that
 provides an efficient and convenient LLMs model server. You can use
 `chat_vllm()` to connect to endpoints powered by vLLM.
@@ -29,7 +31,7 @@ models_vllm(base_url, api_key = NULL, credentials = NULL)
 
 - base_url:
 
-  The base URL to the endpoint; the default is OpenAI's public API.
+  The base URL to the API endpoint.
 
 - system_prompt:
 

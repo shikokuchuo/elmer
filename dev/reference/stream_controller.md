@@ -8,7 +8,7 @@ after the next chunk arrives.
 
 The same controller can be reused across multiple streams. Call
 `$reset()` to clear the cancelled state, or pass it directly to a new
-`$stream()` call — it will be reset automatically.
+`$stream()` call, where it will be reset automatically.
 
 ## Usage
 
@@ -42,7 +42,7 @@ button:
     controller <- stream_controller()
 
     chat_task <- ExtendedTask$new(function(user_query, controller = NULL) {
-      chat <- chat_openai(model = "gpt-4.1-nano")
+      chat <- chat_openai(model = "gpt-5-nano")
       stream <- chat$stream_async(user_query, controller = controller)
       shinychat::markdown_stream("response", stream)
     })

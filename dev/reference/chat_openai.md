@@ -1,5 +1,7 @@
 # Chat with an OpenAI model
 
+![\[Official supported provider\]](figures/support-official.svg)
+
 This is the main interface to [OpenAI](https://openai.com/)'s models,
 using the **responses API**. You can use this to access OpenAI's latest
 models and features like image generation and web search. If you need to
@@ -43,7 +45,7 @@ models_openai(
 
 - base_url:
 
-  The base URL to the endpoint; the default is OpenAI's public API.
+  The base URL to the API endpoint.
 
 - api_key:
 
@@ -62,10 +64,10 @@ models_openai(
 
 - model:
 
-  The model to use for the chat (defaults to "gpt-4.1"). We regularly
-  update the default, so we strongly recommend explicitly specifying a
-  model for anything other than casual use. Use `models_openai()` to see
-  all options.
+  The model to use for the chat (defaults to "gpt-5.6-terra"). We
+  regularly update the default, so we strongly recommend explicitly
+  specifying a model for anything other than casual use. Use
+  `models_openai()` to see all options.
 
 - params:
 
@@ -134,78 +136,71 @@ Other chatbots:
 [`chat_openai_compatible()`](https://ellmer.tidyverse.org/dev/reference/chat_openai_compatible.md),
 [`chat_openrouter()`](https://ellmer.tidyverse.org/dev/reference/chat_openrouter.md),
 [`chat_perplexity()`](https://ellmer.tidyverse.org/dev/reference/chat_perplexity.md),
-[`chat_portkey()`](https://ellmer.tidyverse.org/dev/reference/chat_portkey.md)
+[`chat_portkey()`](https://ellmer.tidyverse.org/dev/reference/chat_portkey.md),
+[`chat_posit()`](https://ellmer.tidyverse.org/dev/reference/chat_posit.md)
 
 ## Examples
 
 ``` r
 chat <- chat_openai()
-#> Using model = "gpt-4.1".
+#> Using model = "gpt-5.6-terra".
 chat$chat("
   What is the difference between a tibble and a data frame?
   Answer with a bulleted list
 ")
-#> - **Origin:**
-#>   - **Data Frame:** Base R object for storing tabular data.
-#>   - **Tibble:** Modern reimagining of data frames, part of the 
-#> tidyverse (tibble package).
+#> - **Origin**
+#>   - A **data frame** is a base R data structure.
+#>   - A **tibble** is a modern reimplementation of a data frame from the
+#> **tibble** package, commonly used in the tidyverse.
 #> 
-#> - **Printing:**
-#>   - **Data Frame:** Prints the entire object, possibly flooding the 
-#> console.
-#>   - **Tibble:** Prints a preview (first 10 rows and fits columns to 
-#> screen), making output more readable.
+#> - **Printing**
+#>   - Data frames often print all rows and columns, which can be 
+#> overwhelming for large datasets.
+#>   - Tibbles print a compact preview: only the first few rows and 
+#> columns, along with column types.
 #> 
-#> - **Subsetting:**
-#>   - **Data Frame:** May simplify to a vector when selecting a single 
-#> column.
-#>   - **Tibble:** Always returns a tibble when subsetting columns with 
-#> `[`.
+#> - **Data types**
+#>   - Data frames may automatically convert character columns to factors
+#> in older versions of R (depending on settings).
+#>   - Tibbles do not automatically convert strings to factors.
 #> 
-#> - **Column Names:**
-#>   - **Data Frame:** Allows non-syntactic names (with some issues).
-#>   - **Tibble:** Accepts any name but displays them as is, including 
-#> those with spaces or special characters (backticks needed to 
-#> reference).
+#> - **Column names**
+#>   - Data frames can modify invalid or duplicate column names by 
+#> default (for example, adding dots).
+#>   - Tibbles preserve column names more consistently and can support 
+#> non-syntactic names.
 #> 
-#> - **Data Types:**
-#>   - **Data Frame:** Converts strings to factors by default (unless 
-#> specified otherwise).
-#>   - **Tibble:** Does **not** convert strings to factors by default.
+#> - **Subsetting**
+#>   - Extracting a single column from a data frame with `df[, "x"]` may 
+#> simplify the result to a vector.
+#>   - Extracting from a tibble with `tbl[, "x"]` always returns another 
+#> tibble; use `tbl[["x"]]` or `tbl$x` to get a vector.
 #> 
-#> - **Partial Matching:**
-#>   - **Data Frame:** Allows partial matching of column names.
-#>   - **Tibble:** Does **not** allow partial matching; requires exact 
-#> names.
+#> - **Partial matching**
+#>   - Data frames may allow partial matching of column names, such as 
+#> `df$long` matching a column called `long_name`.
+#>   - Tibbles do not allow partial matching, helping prevent accidental 
+#> mistakes.
 #> 
-#> - **Performance:**
-#>   - **Data Frame:** Slightly faster for basic operations due to 
-#> simpler structure.
-#>   - **Tibble:** Slightly slower but offers better usability, 
-#> especially for big data analysis.
+#> - **Recycling behavior**
+#>   - Data frames may silently recycle shorter vectors when creating or 
+#> modifying columns.
+#>   - Tibbles are stricter and generally require vectors to have 
+#> compatible lengths, reducing silent errors.
 #> 
-#> - **Use in Tidyverse:**
-#>   - **Data Frame:** Used in base R workflows.
-#>   - **Tibble:** Default in tidyverse packages (ggplot2, dplyr, etc.).
-#> 
-#> - **Row Names:**
-#>   - **Data Frame:** Supports row names.
-#>   - **Tibble:** Does not support row names; stores them as a column if
-#> needed.
-#> 
-#> In summary, tibbles are a modern and tidyverse-friendly version of 
-#> data frames with improved usability and printing features.
+#> - **Compatibility**
+#>   - A tibble is still a type of data frame, so many functions that 
+#> work with data frames also work with tibbles.
+#>   - Some base R functions or older code may expect a plain data frame,
+#> in which case a tibble can be converted with `as.data.frame()`.
 
 chat$chat("Tell me three funny jokes about statisticians")
-#> Absolutely! Here are three funny jokes about statisticians:
+#> - Why did the statistician drown crossing a river?  
+#>   Because it was three feet deep on average.
 #> 
-#> 1. **Why did the statistician bring a ladder to the bar?**  
-#>    Because they heard the drinks were on the house!
+#> - A statistician’s favorite type of joke?  
+#>   One with a significant *p*-unchline.
 #> 
-#> 2. **How does a statistician catch a lion?**  
-#>    They build a cage, label it as “population,” and wait for the lion 
-#> to walk right in—it's all about sampling!
-#> 
-#> 3. **Why don’t statisticians ever get sunburned?**  
-#>    Because they know how to avoid the "mean rays."
+#> - There are three kinds of statisticians:  
+#>   Those who can count, and those who can’t account for sampling error.
 ```

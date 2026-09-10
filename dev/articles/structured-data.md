@@ -12,6 +12,7 @@ specification that defines the object structure you want and the LLM
 ensures that’s what you’ll get back.
 
 ``` r
+
 library(ellmer)
 ```
 
@@ -24,8 +25,9 @@ shortly). Here’s a simple example that extracts two specific values from
 a string:
 
 ``` r
+
 chat <- chat_openai()
-#> Using model = "gpt-4.1".
+#> Using model = "gpt-5.6-terra".
 chat$chat_structured(
   "My name is Susan and I'm 13 years old",
   type = type_object(
@@ -43,8 +45,9 @@ chat$chat_structured(
 The same basic idea works with images too:
 
 ``` r
+
 chat <- chat_openai()
-#> Using model = "gpt-4.1".
+#> Using model = "gpt-5.6-terra".
 chat$chat_structured(
   content_image_url("https://www.r-project.org/Rlogo.png"),
   type = type_object(
@@ -53,10 +56,10 @@ chat$chat_structured(
   )
 )
 #> $primary_shape
-#> [1] "ellipse and letter"
+#> [1] "letter R"
 #> 
 #> $primary_colour
-#> [1] "grey and blue"
+#> [1] "blue"
 ```
 
 If you need to extract data from multiple prompts, you can use
@@ -66,6 +69,7 @@ it needs a `chat` object since it’s a standalone function, not a method,
 and it can take a vector of prompts.
 
 ``` r
+
 prompts <- list(
   "I go by Alex. 42 years on this planet and counting.",
   "Pleased to meet you! I'm Jamal, age 27.",
@@ -79,7 +83,7 @@ type_person <- type_object(
   age = type_number()
 )
 chat <- chat_openai()
-#> Using model = "gpt-4.1".
+#> Using model = "gpt-5.6-terra".
 parallel_chat_structured(chat, prompts, type = type_person)
 #> # A tibble: 6 × 2
 #>   name     age
@@ -93,8 +97,8 @@ parallel_chat_structured(chat, prompts, type = type_person)
 ```
 
 (Note that structured data extraction automatically disables tool
-calling. You can work around this limitation by doing a regular
-`$chat()` and then using `$chat_structured()`.)
+calling, see [below](#tools-and-structured-data) for details and
+workarounds.)
 
 ## Data types
 
@@ -127,6 +131,7 @@ divided into three main groups:
   element. Arrays of scalars are very similar to R’s atomic vectors:
 
   ``` r
+
   type_logical_vector <- type_array(type_boolean())
   type_integer_vector <- type_array(type_integer())
   type_double_vector <- type_array(type_number())
@@ -137,6 +142,7 @@ divided into three main groups:
   structures:
 
   ``` r
+
   list_of_integers <- type_array(type_integer_vector)
   ```
 
@@ -149,6 +155,7 @@ divided into three main groups:
   They are similar to named lists in R.
 
   ``` r
+
   type_person2 <- type_object(
   name = type_string(),
   age = type_integer(),
@@ -178,6 +185,7 @@ like the value to have (e.g. minimum or maximum values, date formats,
 LLM will try.
 
 ``` r
+
 type_person3 <- type_object(
   "A person",
   name = type_string("Name"),
@@ -198,6 +206,7 @@ names and ages, and give it some inputs that don’t have names and/or
 ages.
 
 ``` r
+
 no_match <- list(
   "I like apples",
   "What time is it?",
@@ -206,17 +215,18 @@ no_match <- list(
 )
 parallel_chat_structured(chat, no_match, type = type_person)
 #> # A tibble: 4 × 2
-#>   name                   age
-#>   <chr>                <dbl>
-#> 1 apples                   0
-#> 2 Current Time Request     0
-#> 3 cheese                   3
-#> 4 Hadley                   0
+#>   name                       age
+#>   <chr>                    <dbl>
+#> 1 apples                       0
+#> 2 Current time unavailable     0
+#> 3 cheese                       3
+#> 4 Hadley                       0
 ```
 
 You can often avoid this problem by setting `required = FALSE`:
 
 ``` r
+
 type_person <- type_object(
   name = type_string(required = FALSE),
   age = type_number(required = FALSE)
@@ -227,7 +237,7 @@ parallel_chat_structured(chat, no_match, type = type_person)
 #>   <chr>  <dbl>
 #> 1 NA        NA
 #> 2 NA        NA
-#> 3 cheese     3
+#> 3 NA         3
 #> 4 Hadley    NA
 ```
 
@@ -246,6 +256,7 @@ single prompt. For example, imagine that you want to extract some data
 about people from a table:
 
 ``` r
+
 prompt <- r"(
 * John Smith. Age: 30. Height: 180 cm. Weight: 80 kg.
 * Jane Doe. Age: 25. Height: 5'5". Weight: 110 lb.
@@ -258,6 +269,7 @@ You might be tempted to use a definition similar to R: an object (i.e.,
 a named list) containing multiple arrays (i.e., vectors):
 
 ``` r
+
 type_people <- type_object(
   name = type_array(type_string()),
   age = type_array(type_integer()),
@@ -266,7 +278,7 @@ type_people <- type_object(
 )
 
 chat <- chat_openai()
-#> Using model = "gpt-4.1".
+#> Using model = "gpt-5.6-terra".
 chat$chat_structured(prompt, type = type_people)
 #> $name
 #> [1] "John Smith"     "Jane Doe"       "Jose Rodriguez" "June Lee"      
@@ -287,6 +299,7 @@ really wanted a data frame. Instead, you’ll need to turn the data
 structure “inside out” and create an array of objects:
 
 ``` r
+
 type_people <- type_array(
   type_object(
     name = type_string(),
@@ -297,7 +310,7 @@ type_people <- type_array(
 )
 
 chat <- chat_openai()
-#> Using model = "gpt-4.1".
+#> Using model = "gpt-5.6-terra".
 chat$chat_structured(prompt, type = type_people)
 #> # A tibble: 4 × 4
 #>   name             age height weight
@@ -329,6 +342,7 @@ hint at some of the ways you can use structured data extraction.
 ### Example 1: Article summarisation
 
 ``` r
+
 text <- readLines(system.file(
   "examples/third-party-testing.txt",
   package = "ellmer"
@@ -352,25 +366,26 @@ type_summary <- type_object(
 )
 
 chat <- chat_openai()
-#> Using model = "gpt-4.1".
+#> Using model = "gpt-5.6-terra".
 data <- chat$chat_structured(text, type = type_summary)
 cat(data$summary)
-#> This article by Anthropic argues that the development and deployment of large-scale generative AI systems, such as their own Claude, require robust third-party testing regimes to ensure safety and build public trust. The authors assert that self-governance and internal testing—while important—are insufficient for the sector as a whole, and draw parallels to product safety standards in industries like food, medicine, and aerospace. They argue for a regime involving effective, broadly-trusted safety tests administered by legitimate third-parties, such as independent companies, academic institutions, and government agencies.
+#> Anthropic argues that frontier generative AI systems should be subject to a carefully scoped, broadly trusted third-party testing regime. Because general-purpose models can be adapted to many downstream uses, they may create risks involving election integrity, discrimination, cyberattacks, bioweapons, and unintended autonomous behavior that sector-specific regulation alone cannot adequately address. Anthropic proposes a two-stage approach: broad, rapid automated evaluations designed to avoid missed risks, followed by deeper expert-led testing when concerns are identified. Testing should apply only to a narrow class of the most computationally intensive frontier systems, minimizing burdens on smaller developers.
 #> 
-#> Key elements of this vision include requiring only the most powerful and potentially risky models to undergo such tests, coordinating international standards, and focusing resources on national security and other high-stakes domains. The article stresses the need to balance robust safety assurance with not overburdening small companies, avoiding regulatory capture, and maintaining innovation. It discusses the tensions around open-source AI and advocates for a 'minimal viable policy approach' that is both practical and enables feedback. Anthropic highlights ongoing activities to support effective third-party testing and sees this approach as central to advancing societal oversight and preventing both deliberate and accidental harm from AI.
+#> The article calls for an ecosystem of private auditors, universities, and government agencies to develop and administer evaluations, with governments funding capacity at institutions such as NIST and national AI research infrastructure. Anthropic presents its Responsible Scaling Policy as an early prototype but says voluntary company self-governance is insufficient. It also argues that shared evaluation standards could help international coordination and reduce regulatory capture. On open models, it supports openness for most current systems but contends that future models with demonstrable severe misuse potential may require controlled release, hardened safeguards, or limits on fine-tuning—decisions that should rely on legitimate independent testing rather than AI companies alone.
 
 str(data)
 #> List of 5
-#>  $ author    : chr "Anthropic Policy Team (implied, no explicit author)"
-#>  $ topics    : chr [1:11] "AI safety" "AI policy" "third-party testing" "regulation" ...
-#>  $ summary   : chr "This article by Anthropic argues that the development and deployment of large-scale generative AI systems, such"| __truncated__
-#>  $ coherence : int 93
-#>  $ persuasion: num 0.88
+#>  $ author    : chr "Anthropic"
+#>  $ topics    : chr [1:9] "AI policy" "third-party AI testing" "frontier AI safety" "AI evaluations" ...
+#>  $ summary   : chr "Anthropic argues that frontier generative AI systems should be subject to a carefully scoped, broadly trusted t"| __truncated__
+#>  $ coherence : int 91
+#>  $ persuasion: num 0.78
 ```
 
 ### Example 2: Named entity recognition
 
 ``` r
+
 text <- "
   John works at Google in New York. He met with Sarah, the CEO of
   Acme Inc., last week in San Francisco.
@@ -384,7 +399,7 @@ type_named_entity <- type_object(
 type_named_entities <- type_array(type_named_entity)
 
 chat <- chat_openai()
-#> Using model = "gpt-4.1".
+#> Using model = "gpt-5.6-terra".
 chat$chat_structured(text, type = type_named_entities)
 #> # A tibble: 6 × 3
 #>   name          type         context                                   
@@ -392,14 +407,15 @@ chat$chat_structured(text, type = type_named_entities)
 #> 1 John          person       John works at Google in New York.         
 #> 2 Google        organization John works at Google in New York.         
 #> 3 New York      location     John works at Google in New York.         
-#> 4 Sarah         person       He met with Sarah, the CEO of Acme Inc.   
-#> 5 Acme Inc.     organization Sarah, the CEO of Acme Inc.               
-#> 6 San Francisco location     He met with Sarah... last week in San Fra…
+#> 4 Sarah         person       He met with Sarah, the CEO of Acme Inc., …
+#> 5 Acme Inc.     organization Sarah is the CEO of Acme Inc.             
+#> 6 San Francisco location     He met with Sarah, the CEO of Acme Inc., …
 ```
 
 ### Example 3: Sentiment analysis
 
 ``` r
+
 text <- "
   The product was okay, but the customer service was terrible. I probably
   won't buy from them again.
@@ -419,12 +435,12 @@ type_sentiment <- type_object(
 )
 
 chat <- chat_openai()
-#> Using model = "gpt-4.1".
+#> Using model = "gpt-5.6-terra".
 str(chat$chat_structured(text, type = type_sentiment))
 #> List of 3
 #>  $ positive_score: num 0.1
-#>  $ negative_score: num 0.7
-#>  $ neutral_score : num 0.2
+#>  $ negative_score: num 0.8
+#>  $ neutral_score : num 0.1
 ```
 
 Note that while we’ve asked nicely for the scores to sum 1, which they
@@ -434,6 +450,7 @@ guaranteed.
 ### Example 4: Text classification
 
 ``` r
+
 text <- "The new quantum computing breakthrough could revolutionize the tech industry."
 
 type_score <- type_object(
@@ -458,23 +475,31 @@ type_classification <- type_array(
 )
 
 chat <- chat_openai()
-#> Using model = "gpt-4.1".
+#> Using model = "gpt-5.6-terra".
 data <- chat$chat_structured(text, type = type_classification)
 data
 #> # A tibble: 3 × 2
 #>   name       score
 #>   <fct>      <dbl>
-#> 1 Technology  0.95
-#> 2 Business    0.04
+#> 1 Technology  0.98
+#> 2 Business    0.01
 #> 3 Other       0.01
 ```
 
 ### Example 5: Working with unknown keys
 
+If you don’t know the keys in advance, you can use an array of
+name-value pairs. This approach works with all providers, replacing the
+now-deprecated `.additional_properties` argument.
+
 ``` r
-type_characteristics <- type_object(
-  "All characteristics",
-  .additional_properties = TRUE
+
+type_characteristics <- type_array(
+  type_object(
+    name = type_string(),
+    value = type_string()
+  ),
+  description = "All characteristics"
 )
 
 text <- "
@@ -482,19 +507,17 @@ text <- "
 "
 
 chat <- chat_anthropic("Extract all characteristics of supplied character")
-#> Using model = "claude-sonnet-4-5-20250929".
-str(chat$chat_structured(text, type = type_characteristics))
-#> List of 6
-#>  $ gender              : chr "male"
-#>  $ height              : chr "tall"
-#>  $ facial_hair         : chr "beard"
-#>  $ distinguishing_marks: chr "scar on left cheek"
-#>  $ voice               : chr "deep voice"
-#>  $ clothing            : chr "black leather jacket"
+#> Using model = "claude-sonnet-5".
+chat$chat_structured(text, type = type_characteristics)
+#> # A tibble: 5 × 2
+#>   name                value               
+#>   <chr>               <chr>               
+#> 1 height              tall                
+#> 2 facial hair         beard               
+#> 3 distinguishing mark scar on left cheek  
+#> 4 voice               deep                
+#> 5 clothing            black leather jacket
 ```
-
-This example only works with Claude, not GPT or Gemini, because only
-Claude supports adding additional, arbitrary properties.
 
 ### Example 6: Extracting data from an image
 
@@ -511,6 +534,7 @@ Screenshot of schedule A: a table showing assets and “unearned” income
 Even without any descriptions, ChatGPT does pretty well:
 
 ``` r
+
 type_asset <- type_object(
   assert_name = type_string(),
   owner = type_string(),
@@ -530,9 +554,19 @@ data <- chat$chat_structured(image, type = type_assets)
 data
 ```
 
+## Tools and structured data
+
+`$chat_structured()` automatically disables any registered tools. This
+is because when tools are involved, the model may need multiple round
+trips to gather information, and it has no way to know which response is
+the “last” one that should use the structured output schema. If you need
+both, call `$chat()` first to get the information you need via tools,
+then call `$chat_structured()` to extract structured data from the
+conversation.
+
 ## Token usage
 
-| provider  | model                      | input | output | cached_input |  price |
-|:----------|:---------------------------|------:|-------:|-------------:|-------:|
-| OpenAI    | gpt-4.1                    |  6250 |    991 |            0 | \$0.02 |
-| Anthropic | claude-sonnet-4-5-20250929 |   730 |     95 |            0 | \$0.00 |
+| provider  | model           | input | output | cached_input |  price |
+|:----------|:----------------|------:|-------:|-------------:|-------:|
+| OpenAI    | gpt-5.6-terra   |  1664 |   1423 |         4331 | \$0.02 |
+| Anthropic | claude-sonnet-5 |   317 |     95 |            0 | \$0.00 |

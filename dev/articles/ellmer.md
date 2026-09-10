@@ -1,6 +1,7 @@
 # Getting started with ellmer
 
 ``` r
+
 library(ellmer)
 ```
 
@@ -86,18 +87,19 @@ printing it, and you can see total usage for a session with
 [`token_usage()`](https://ellmer.tidyverse.org/dev/reference/token_usage.md).
 
 ``` r
+
 chat <- chat_openai(model = "gpt-4.1")
 . <- chat$chat("Who created R?", echo = FALSE)
 chat
-#> <Chat OpenAI/gpt-4.1 turns=2 input=11 output=110 cost=$0.00>
+#> <Chat OpenAI/gpt-4.1 turns=2 input=11 output=75 cost=$0.00>
 #> ── user ───────────────────────────────────────────────────────────────
 #> Who created R?
-#> ── assistant [input=11 output=110 cost=$0.00] ─────────────────────────
-#> **R** is a programming language and software environment for statistical computing and graphics. It was created by **Ross Ihaka and Robert Gentleman** at the University of Auckland, New Zealand, in the early 1990s. The name "R" is partly derived from the first letters of their first names (Ross and Robert), and it is also a play on the name of the S programming language, which R was designed to improve upon and be compatible with. Today, R is maintained by the **R Core Team** and the community.
+#> ── assistant [input=11 output=75 cost=$0.00] ──────────────────────────
+#> **R** was created by **Ross Ihaka** and **Robert Gentleman** at the **University of Auckland, New Zealand**. The project began in **1992**, and the first version was released in **1995**. Today, R is developed and maintained by the **R Core Team**, a group of statisticians and computational scientists from around the world.
 
 token_usage()
 #>   provider   model input output cached_input price
-#> 1   OpenAI gpt-4.1    11    110            0 $0.00
+#> 1   OpenAI gpt-4.1    11     75            0 $0.00
 ```
 
 If you want to learn more about tokens and tokenizers, I’d recommend
@@ -140,7 +142,7 @@ two other important prompts that underlie the user prompt:
 - The **platform prompt**, which is unchangeable, set by the model
   provider, and affects every conversation. You can see what these look
   like from Anthropic, who [publishes their core system
-  prompts](https://docs.claude.com/en/release-notes/system-prompts).
+  prompts](https://platform.claude.com/docs/en/release-notes/system-prompts).
 
 - The **system prompt** (aka developer prompt), which is set when you
   create a new conversation, and affects every response. It’s used to
@@ -200,8 +202,8 @@ has a prompt stuffed with useful knowledge. For example:
   assistant](https://github.com/jcheng5/ellmer-assistant) works.
 
 - Build language specific prompts for R and/or Python. [Shiny
-  Assistant](https://shiny.posit.co/blog/posts/shiny-assistant/) helps
-  you build shiny apps (either in R or Python) by combining a
+  Assistant](https://opensource.posit.co/blog/2024-10-09_shiny-assistant/)
+  helps you build shiny apps (either in R or Python) by combining a
   [prompt](https://github.com/posit-dev/shiny-assistant/blob/main/shinyapp/app_prompt.md)
   that gives general advice on building apps with a prompt for
   [R](https://github.com/posit-dev/shiny-assistant/blob/main/shinyapp/app_prompt_r.md)

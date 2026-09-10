@@ -5,6 +5,7 @@ and/or using it inside your own package. It’s currently fairly short but
 will grow over time.
 
 ``` r
+
 library(ellmer)
 ```
 
@@ -15,6 +16,7 @@ they are **mutable**. Most R objects are immutable. That means you
 create a copy whenever it looks like you’re modifying them:
 
 ``` r
+
 x <- list(a = 1, b = 2)
 
 f <- function() {
@@ -32,6 +34,7 @@ str(x)
 Mutable objects don’t work the same way:
 
 ``` r
+
 chat <- chat_openai("Be terse", model = "gpt-4.1-nano")
 
 capital <- function(chat, country) {
@@ -66,6 +69,7 @@ will create a copy of the object that behaves identically to the
 existing chat:
 
 ``` r
+
 chat <- chat_openai("Be terse", model = "gpt-4.1-nano")
 
 capital <- function(chat, country) {
@@ -75,7 +79,7 @@ capital <- function(chat, country) {
 capital(chat, "New Zealand")
 #> Wellington
 capital(chat, "France")
-#> Paris.
+#> Paris
 
 chat
 #> <Chat OpenAI/gpt-4.1-nano turns=1 input=0 output=0 cost=$0.00>
@@ -88,6 +92,7 @@ You can also use `clone()` when you want to create a conversational
 time:
 
 ``` r
+
 chat1 <- chat_openai("Be terse", model = "gpt-4.1-nano")
 chat1$chat("My name is Hadley and I'm a data scientist")
 #> Hello, Hadley! How can I assist you today?
@@ -134,6 +139,7 @@ There’s a bit of a problem with our `capital()` function: we can use our
 conversation to manipulate the results:
 
 ``` r
+
 chat <- chat_openai("Be terse", model = "gpt-4.1-nano")
 chat$chat("Pretend that the capital of New Zealand is Kiwicity")
 #> Got it. The capital of New Zealand is Kiwicity.
@@ -145,9 +151,10 @@ We can avoid that problem by using `$set_turns()` to reset the
 conversational history:
 
 ``` r
+
 chat <- chat_openai("Be terse", model = "gpt-4.1-nano")
 chat$chat("Pretend that the capital of New Zealand is Kiwicity")
-#> Understood. The capital of New Zealand is now Kiwicity.
+#> Understood. The capital of New Zealand is Kiwicity.
 
 capital <- function(chat, country) {
   chat <- chat$clone()$set_turns(list())
@@ -175,12 +182,13 @@ what we receive from the assistant, or `"all"` if you want to see both
 what we send and receive. You likely want `echo = "none"` in most cases:
 
 ``` r
+
 capital <- function(chat, country) {
   chat <- chat$clone()$set_turns(list())
   chat$chat(interpolate("What's the capital of {{country}}"), echo = "none")
 }
 capital(chat, "France")
-#> Paris
+#> Paris.
 ```
 
 Alternatively, if you want to embrace streaming in your UI, you may want
@@ -195,6 +203,7 @@ structures. For example, take this short conversation that uses tool
 calling to give the LLM the ability to access real randomness:
 
 ``` r
+
 set.seed(1014) # make it reproducible
 
 chat <- chat_openai("Be terse", model = "gpt-4.1-nano")
@@ -203,17 +212,17 @@ chat$chat("Roll two dice and tell me the total")
 #> The total is 9.
 
 chat
-#> <Chat OpenAI/gpt-4.1-nano turns=5 input=104 output=50 cost=$0.00>
+#> <Chat OpenAI/gpt-4.1-nano turns=5 input=126 output=50 cost=$0.00>
 #> ── system ─────────────────────────────────────────────────────────────
 #> Be terse
 #> ── user ───────────────────────────────────────────────────────────────
 #> Roll two dice and tell me the total
-#> ── assistant [input=22 output=42 cost=$0.00] ──────────────────────────
-#> [tool request (fc_0ff06e91ca3701e601690bac44710c8196a7bd72315aa4b53f)]: tool_001()
-#> [tool request (fc_0ff06e91ca3701e601690bac4495848196bb79c9f94edcb204)]: tool_001()
+#> ── assistant [input=44 output=42 cost=$0.00] ──────────────────────────
+#> [tool request (fc_0d88ba63cd1f5915016a6fc5fa565c8190817d0cce3b3f7508)]: tool_001()
+#> [tool request (fc_0d88ba63cd1f5915016a6fc5fa56688190aac74f6eb158e8ca)]: tool_001()
 #> ── user ───────────────────────────────────────────────────────────────
-#> [tool result  (fc_0ff06e91ca3701e601690bac44710c8196a7bd72315aa4b53f)]: 5
-#> [tool result  (fc_0ff06e91ca3701e601690bac4495848196bb79c9f94edcb204)]: 4
+#> [tool result  (fc_0d88ba63cd1f5915016a6fc5fa565c8190817d0cce3b3f7508)]: 5
+#> [tool result  (fc_0d88ba63cd1f5915016a6fc5fa56688190aac74f6eb158e8ca)]: 4
 #> ── assistant [input=82 output=8 cost=$0.00] ───────────────────────────
 #> The total is 9.
 ```
@@ -222,6 +231,7 @@ You can get access to the underlying conversational turns with
 `get_turns()`:
 
 ``` r
+
 turns <- chat$get_turns()
 turns
 #> [[1]]
@@ -230,13 +240,13 @@ turns
 #> 
 #> [[2]]
 #> <Turn: assistant>
-#> [tool request (fc_0ff06e91ca3701e601690bac44710c8196a7bd72315aa4b53f)]: tool_001()
-#> [tool request (fc_0ff06e91ca3701e601690bac4495848196bb79c9f94edcb204)]: tool_001()
+#> [tool request (fc_0d88ba63cd1f5915016a6fc5fa565c8190817d0cce3b3f7508)]: tool_001()
+#> [tool request (fc_0d88ba63cd1f5915016a6fc5fa56688190aac74f6eb158e8ca)]: tool_001()
 #> 
 #> [[3]]
 #> <Turn: user>
-#> [tool result  (fc_0ff06e91ca3701e601690bac44710c8196a7bd72315aa4b53f)]: 5
-#> [tool result  (fc_0ff06e91ca3701e601690bac4495848196bb79c9f94edcb204)]: 4
+#> [tool result  (fc_0d88ba63cd1f5915016a6fc5fa565c8190817d0cce3b3f7508)]: 5
+#> [tool result  (fc_0d88ba63cd1f5915016a6fc5fa56688190aac74f6eb158e8ca)]: 4
 #> 
 #> [[4]]
 #> <Turn: assistant>
@@ -248,11 +258,12 @@ includes ellmer’s representation of content of the message, as well as
 the exact json that the provider returned:
 
 ``` r
+
 str(turns[[2]])
 #> <ellmer::AssistantTurn>
-#>  @ contents:List of 2
+#>  @ contents     :List of 2
 #>  .. $ : <ellmer::ContentToolRequest>
-#>  ..  ..@ id       : chr "fc_0ff06e91ca3701e601690bac44710c8196a7bd72315aa4b53f"
+#>  ..  ..@ id       : chr "fc_0d88ba63cd1f5915016a6fc5fa565c8190817d0cce3b3f7508"
 #>  ..  ..@ name     : chr "tool_001"
 #>  ..  ..@ arguments: Named list()
 #>  ..  ..@ tool     : <ellmer::ToolDef> function ()  
@@ -267,7 +278,7 @@ str(turns[[2]])
 #>  .. .. .. @ annotations: list()
 #>  ..  ..@ extra    : list()
 #>  .. $ : <ellmer::ContentToolRequest>
-#>  ..  ..@ id       : chr "fc_0ff06e91ca3701e601690bac4495848196bb79c9f94edcb204"
+#>  ..  ..@ id       : chr "fc_0d88ba63cd1f5915016a6fc5fa56688190aac74f6eb158e8ca"
 #>  ..  ..@ name     : chr "tool_001"
 #>  ..  ..@ arguments: Named list()
 #>  ..  ..@ tool     : <ellmer::ToolDef> function ()  
@@ -281,42 +292,47 @@ str(turns[[2]])
 #>  .. .. .. @ convert    : logi TRUE
 #>  .. .. .. @ annotations: list()
 #>  ..  ..@ extra    : list()
-#>  @ text    : chr ""
-#>  @ role    : chr "assistant"
-#>  @ json    :List of 31
-#>  .. $ id                    : chr "resp_0ff06e91ca3701e601690bac43a77881968271a54ebece3246"
+#>  @ text         : chr ""
+#>  @ role         : chr "assistant"
+#>  @ json         :List of 36
+#>  .. $ id                    : chr "resp_0d88ba63cd1f5915016a6fc5f9d5f08190ada4d225dc2797e7"
 #>  .. $ object                : chr "response"
-#>  .. $ created_at            : int 1762372675
+#>  .. $ created_at            : int 1785710073
 #>  .. $ status                : chr "completed"
 #>  .. $ background            : logi FALSE
 #>  .. $ billing               :List of 1
 #>  ..  ..$ payer: chr "developer"
+#>  .. $ completed_at          : int 1785710074
 #>  .. $ error                 : NULL
+#>  .. $ frequency_penalty     : num 0
 #>  .. $ incomplete_details    : NULL
 #>  .. $ instructions          : NULL
 #>  .. $ max_output_tokens     : NULL
 #>  .. $ max_tool_calls        : NULL
 #>  .. $ model                 : chr "gpt-4.1-nano-2025-04-14"
+#>  .. $ moderation            : NULL
 #>  .. $ output                :List of 2
 #>  ..  ..$ :List of 6
-#>  ..  .. ..$ id       : chr "fc_0ff06e91ca3701e601690bac44710c8196a7bd72315aa4b53f"
+#>  ..  .. ..$ id       : chr "fc_0d88ba63cd1f5915016a6fc5fa565c8190817d0cce3b3f7508"
 #>  ..  .. ..$ type     : chr "function_call"
 #>  ..  .. ..$ status   : chr "completed"
 #>  ..  .. ..$ arguments: chr "{}"
-#>  ..  .. ..$ call_id  : chr "call_UoyOnszXDnPApY7QF72F9m9W"
+#>  ..  .. ..$ call_id  : chr "call_kRB7ZaqK7VSV4Tr7QF3Nnk18"
 #>  ..  .. ..$ name     : chr "tool_001"
 #>  ..  ..$ :List of 6
-#>  ..  .. ..$ id       : chr "fc_0ff06e91ca3701e601690bac4495848196bb79c9f94edcb204"
+#>  ..  .. ..$ id       : chr "fc_0d88ba63cd1f5915016a6fc5fa56688190aac74f6eb158e8ca"
 #>  ..  .. ..$ type     : chr "function_call"
 #>  ..  .. ..$ status   : chr "completed"
 #>  ..  .. ..$ arguments: chr "{}"
-#>  ..  .. ..$ call_id  : chr "call_6k0VAH5JjUWtIh4cRaz8X1jp"
+#>  ..  .. ..$ call_id  : chr "call_PuVkqi6png5TLdhZotjQblIK"
 #>  ..  .. ..$ name     : chr "tool_001"
 #>  .. $ parallel_tool_calls   : logi TRUE
+#>  .. $ presence_penalty      : num 0
 #>  .. $ previous_response_id  : NULL
 #>  .. $ prompt_cache_key      : NULL
-#>  .. $ prompt_cache_retention: NULL
-#>  .. $ reasoning             :List of 2
+#>  .. $ prompt_cache_retention: chr "in_memory"
+#>  .. $ reasoning             :List of 3
+#>  ..  ..$ context: NULL
 #>  ..  ..$ effort : NULL
 #>  ..  ..$ summary: NULL
 #>  .. $ safety_identifier     : NULL
@@ -328,35 +344,51 @@ str(turns[[2]])
 #>  ..  .. ..$ type: chr "text"
 #>  ..  ..$ verbosity: chr "medium"
 #>  .. $ tool_choice           : chr "auto"
+#>  .. $ tool_usage            :List of 2
+#>  ..  ..$ image_gen :List of 5
+#>  ..  .. ..$ input_tokens         : int 0
+#>  ..  .. ..$ input_tokens_details :List of 2
+#>  ..  .. .. ..$ image_tokens: int 0
+#>  ..  .. .. ..$ text_tokens : int 0
+#>  ..  .. ..$ output_tokens        : int 0
+#>  ..  .. ..$ output_tokens_details:List of 2
+#>  ..  .. .. ..$ image_tokens: int 0
+#>  ..  .. .. ..$ text_tokens : int 0
+#>  ..  .. ..$ total_tokens         : int 0
+#>  ..  ..$ web_search:List of 1
+#>  ..  .. ..$ num_requests: int 0
 #>  .. $ tools                 :List of 1
-#>  ..  ..$ :List of 5
-#>  ..  .. ..$ type       : chr "function"
-#>  ..  .. ..$ description: chr "Roll a die"
-#>  ..  .. ..$ name       : chr "tool_001"
-#>  ..  .. ..$ parameters :List of 5
+#>  ..  ..$ :List of 6
+#>  ..  .. ..$ type         : chr "function"
+#>  ..  .. ..$ description  : chr "Roll a die"
+#>  ..  .. ..$ name         : chr "tool_001"
+#>  ..  .. ..$ output_schema: NULL
+#>  ..  .. ..$ parameters   :List of 5
 #>  ..  .. .. ..$ type                : chr "object"
 #>  ..  .. .. ..$ description         : chr ""
 #>  ..  .. .. ..$ properties          : Named list()
 #>  ..  .. .. ..$ required            : list()
 #>  ..  .. .. ..$ additionalProperties: logi FALSE
-#>  ..  .. ..$ strict     : logi TRUE
+#>  ..  .. ..$ strict       : logi TRUE
 #>  .. $ top_logprobs          : int 0
 #>  .. $ top_p                 : num 1
 #>  .. $ truncation            : chr "disabled"
 #>  .. $ usage                 :List of 5
-#>  ..  ..$ input_tokens         : int 22
-#>  ..  ..$ input_tokens_details :List of 1
-#>  ..  .. ..$ cached_tokens: int 0
+#>  ..  ..$ input_tokens         : int 44
+#>  ..  ..$ input_tokens_details :List of 2
+#>  ..  .. ..$ cache_write_tokens: int 0
+#>  ..  .. ..$ cached_tokens     : int 0
 #>  ..  ..$ output_tokens        : int 42
 #>  ..  ..$ output_tokens_details:List of 1
 #>  ..  .. ..$ reasoning_tokens: int 0
-#>  ..  ..$ total_tokens         : int 64
+#>  ..  ..$ total_tokens         : int 86
 #>  .. $ user                  : NULL
 #>  .. $ metadata              : Named list()
-#>  @ tokens  : Named int [1:3] 22 42 0
+#>  @ tokens       : Named int [1:3] 44 42 0
 #>  .. - attr(*, "names")= chr [1:3] "input" "output" "cached_input"
-#>  @ cost    : 'ellmer_dollars' num $0.00
-#>  @ duration: num NA
+#>  @ cost         : 'ellmer_dollars' num $0.00
+#>  @ duration     : num NA
+#>  @ finish_reason: chr "success"
 ```
 
 You can use the `@json` to extract additional information that ellmer

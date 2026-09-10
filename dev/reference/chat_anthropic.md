@@ -1,5 +1,7 @@
 # Chat with an Anthropic Claude model
 
+![\[Official supported provider\]](figures/support-official.svg)
+
 [Anthropic](https://www.anthropic.com) provides a number of chat based
 models under the [Claude](https://claude.com/product/overview) moniker.
 Note that a Claude Pro membership does not give you the ability to call
@@ -15,7 +17,7 @@ chat_anthropic(
   model = NULL,
   cache = c("5m", "1h", "none"),
   api_args = list(),
-  base_url = "https://api.anthropic.com/v1",
+  base_url = NULL,
   beta_headers = character(),
   api_key = NULL,
   credentials = NULL,
@@ -29,7 +31,7 @@ chat_claude(
   model = NULL,
   cache = c("5m", "1h", "none"),
   api_args = list(),
-  base_url = "https://api.anthropic.com/v1",
+  base_url = NULL,
   beta_headers = character(),
   api_key = NULL,
   credentials = NULL,
@@ -37,15 +39,9 @@ chat_claude(
   echo = NULL
 )
 
-models_claude(
-  base_url = "https://api.anthropic.com/v1",
-  api_key = anthropic_key()
-)
+models_claude(base_url = NULL, api_key = NULL, credentials = NULL)
 
-models_anthropic(
-  base_url = "https://api.anthropic.com/v1",
-  api_key = anthropic_key()
-)
+models_anthropic(base_url = NULL, api_key = NULL, credentials = NULL)
 ```
 
 ## Arguments
@@ -61,10 +57,10 @@ models_anthropic(
 
 - model:
 
-  The model to use for the chat (defaults to
-  "claude-sonnet-4-5-20250929"). We regularly update the default, so we
-  strongly recommend explicitly specifying a model for anything other
-  than casual use. Use `models_anthropic()` to see all options.
+  The model to use for the chat (defaults to "claude-sonnet-5"). We
+  regularly update the default, so we strongly recommend explicitly
+  specifying a model for anything other than casual use. Use
+  `models_anthropic()` to see all options.
 
 - cache:
 
@@ -81,7 +77,8 @@ models_anthropic(
 
 - base_url:
 
-  The base URL to the endpoint; the default is Claude's public API.
+  The base URL to the endpoint; the default is the `ANTHROPIC_BASE_URL`
+  environment variable if set, and Claude's public API otherwise.
 
 - beta_headers:
 
@@ -187,35 +184,29 @@ Other chatbots:
 [`chat_openai_compatible()`](https://ellmer.tidyverse.org/dev/reference/chat_openai_compatible.md),
 [`chat_openrouter()`](https://ellmer.tidyverse.org/dev/reference/chat_openrouter.md),
 [`chat_perplexity()`](https://ellmer.tidyverse.org/dev/reference/chat_perplexity.md),
-[`chat_portkey()`](https://ellmer.tidyverse.org/dev/reference/chat_portkey.md)
+[`chat_portkey()`](https://ellmer.tidyverse.org/dev/reference/chat_portkey.md),
+[`chat_posit()`](https://ellmer.tidyverse.org/dev/reference/chat_posit.md)
 
 ## Examples
 
 ``` r
 chat <- chat_anthropic()
-#> Using model = "claude-sonnet-4-5-20250929".
+#> Using model = "claude-sonnet-5".
 chat$chat("Tell me three jokes about statisticians")
-#> # Three Jokes About Statisticians
+#> Here are three statistician jokes for you:
 #> 
-#> **1. The Drowning Statistician**
-#> A statistician is someone who could drown crossing a river that's an 
-#> average of three feet deep.
+#> 1. A statistician's wife has twins. He is delighted. He tells the 
+#> vicar he'll be baptizing them separately. "Why?" asks the vicar. 
+#> "Because," the statistician replies, "I hate sampling with 
+#> replacement."
 #> 
-#> **2. The Uncertain Response**
-#> Three statisticians go hunting. They spot a deer. The first 
-#> statistician shoots and misses—two feet to the left. The second shoots
-#> and misses—two feet to the right. The third statistician jumps up and 
-#> down shouting, "We got it! We got it!"
+#> 2. Three statisticians go hunting. They spot a deer. The first one 
+#> shoots and misses by a foot to the left. The second shoots and misses 
+#> by a foot to the right. The third one yells, "We got it!"
 #> 
-#> **3. The Kidnapped Statistician**
-#> A kidnapper grabs a statistician and threatens, "Give me all your 
-#> money or you're average!" The statistician replies, "I think you mean 
-#> 'or you're history.'" The kidnapper responds, "Don't tell me my 
-#> job—you tell me the mean!"
+#> 3. A statistician can have their head in an oven and feet in ice, and 
+#> they'll say on average they feel fine.
 #> 
-#> ---
-#> 
-#> *These jokes play on statistical concepts like averages, means, and 
-#> the classic distinction between theoretical data and practical 
-#> reality!*
+#> Want a few more, or maybe some on a specific topic like regression or 
+#> p-values?
 ```

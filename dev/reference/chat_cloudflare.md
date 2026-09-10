@@ -1,9 +1,11 @@
 # Chat with a model hosted on CloudFlare
 
-[Cloudflare](https://www.cloudflare.com/developer-platform/products/workers-ai/)
-Workers AI hosts a variety of open-source AI models. To use the
-Cloudflare API, you must have an Account ID and an Access Token, which
-you can obtain [by following these
+![\[Community supported provider\]](figures/support-community.svg)
+
+[Cloudflare](https://www.cloudflare.com/products/workers-ai/) Workers AI
+hosts a variety of open-source AI models. To use the Cloudflare API, you
+must have an Account ID and an Access Token, which you can obtain [by
+following these
 instructions](https://developers.cloudflare.com/workers-ai/get-started/rest-api/).
 
 Built on top of
@@ -118,7 +120,8 @@ Other chatbots:
 [`chat_openai_compatible()`](https://ellmer.tidyverse.org/dev/reference/chat_openai_compatible.md),
 [`chat_openrouter()`](https://ellmer.tidyverse.org/dev/reference/chat_openrouter.md),
 [`chat_perplexity()`](https://ellmer.tidyverse.org/dev/reference/chat_perplexity.md),
-[`chat_portkey()`](https://ellmer.tidyverse.org/dev/reference/chat_portkey.md)
+[`chat_portkey()`](https://ellmer.tidyverse.org/dev/reference/chat_portkey.md),
+[`chat_posit()`](https://ellmer.tidyverse.org/dev/reference/chat_posit.md)
 
 ## Examples
 
