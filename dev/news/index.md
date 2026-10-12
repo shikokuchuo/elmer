@@ -31,9 +31,19 @@
   partial (interrupted) assistant turn
   ([@taekop](https://github.com/taekop),
   [\#1131](https://github.com/tidyverse/ellmer/issues/1131)).
+- [`chat_openai()`](https://ellmer.tidyverse.org/dev/reference/chat_openai.md)
+  now sends `type = "message"` on every input item to the Responses API,
+  so OpenAI-compatible servers that require it (e.g. llama.cpp) no
+  longer reject replayed assistant turns
+  ([@taekop](https://github.com/taekop),
+  [\#1153](https://github.com/tidyverse/ellmer/issues/1153)).
 - [`live_browser()`](https://ellmer.tidyverse.org/dev/reference/live_console.md)
   works again with shinychat \>= 0.5.0
   ([\#1167](https://github.com/tidyverse/ellmer/issues/1167)).
+- Streamed responses now record the time to first token (in seconds) as
+  the `gen_ai.response.time_to_first_chunk` attribute on the
+  OpenTelemetry `chat` span ([@schloerke](https://github.com/schloerke),
+  [\#1142](https://github.com/tidyverse/ellmer/issues/1142)).
 
 ## ellmer 0.5.0
 
